@@ -3,94 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>드래그 가능한 텍스트</title>
+    <title>섹시유수 갤러리</title>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            font-family: Arial, sans-serif;
             margin: 0;
-            overflow: hidden;
-            background-color: #f4f4f4;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            background-color: #fff;
+            overflow-y: auto;
         }
 
-        .border-box {
-            position: relative;
-            width: 90vw;
-            height: 160vw;
-            max-width: 360px;
-            max-height: 640px;
-            border: 3px solid blue;
+        /* PC 접속 방지 */
+        @media (min-width: 768px) {
+            body::before {
+                content: "모바일에서만 접속 가능합니다.";
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 20px;
+                font-weight: bold;
+                color: red;
+            }
+            body * {
+                display: none;
+            }
+        }
+
+        /* 텍스트 스타일 */
+        .title {
+            position: absolute;
+            top: 14.59px;
+            left: 10.63px;
+            font-size: 23pt;
+            font-weight: bold;
+            color: black;
+        }
+
+        .menu-item {
+            font-size: 17pt;
+            color: black;
             display: flex;
-            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 40px; /* 엔터 4칸 간격 */
+            cursor: pointer;
+            filter: blur(10px);
+            transition: filter 0.3s ease-in-out;
+        }
+
+        .menu-item img {
+            width: 20px; /* 17pt와 유사한 크기 */
+            height: 20px;
+        }
+
+        /* DIY 블러처리 */
+        .blur-heavy {
+            filter: blur(20px);
+            pointer-events: none;
+        }
+
+        /* 버튼 스타일 */
+        .menu-item.enabled {
+            filter: blur(0);
+            pointer-events: auto;
+        }
+
+        /* 비밀번호 입력 영역 */
+        .password-container {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
         }
 
-        .container {
-            position: absolute;
-            cursor: grab;
-            font-size: 24px;
-            font-weight: bold;
-            text-align: center;
-            touch-action: none;
+        .password-input {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
         }
 
-        .coordinates {
-            display: block;
-            font-size: 14px;
-            color: rgba(0, 0, 0, 0.5);
-            margin-top: 5px;
+        .password-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* 하단 링크 */
+        .vault-button {
+            margin-top: 200px;
+            filter: blur(10px);
+        }
+
+        .vault-button.enabled {
+            filter: blur(0);
         }
     </style>
 </head>
 <body>
-    <div class="border-box">
-        <div id="draggable" class="container">
-            <span>Hello</span>
-            <span id="coords" class="coordinates">X: 0px, Y: 0px, Z: 0</span>
+
+    <div class="title">섹시유수 갤러리</div>
+
+    <div class="password-container">
+        <input type="password" id="password" class="password-input" placeholder="비밀번호 입력">
+        <button onclick="unlockContent()" class="password-button">확인</button>
+    </div>
+
+    <!-- 메뉴 -->
+    <div id="menu">
+        <div class="menu-item blur-heavy" id="diary">
+            <img src="link1" alt="icon1">
+            <span>섹시유수의 비밀 일기</span>
+        </div>
+        <div class="menu-item blur-heavy" id="life-note">
+            <img src="link4" alt="icon4">
+            <span>인생노트</span>
+        </div>
+        <div class="menu-item blur-heavy" id="secret">
+            <img src="link2" alt="icon2">
+            <span>섹시유수의 비밀 썰</span>
+        </div>
+        <div class="menu-item blur-heavy" id="cartoon">
+            <img src="link3" alt="icon3">
+            <span>섹시유수 컷툰</span>
+        </div>
+        <div class="menu-item blur-heavy" id="diy">
+            <img src="link5" alt="icon5">
+            <span class="blur-heavy">DIY</span>
         </div>
     </div>
 
+    <!-- Vault 버튼 -->
+    <a href="https://yousoo68.github.io/IHTgAiw/" class="vault-button" id="vault-link">
+        <img src="vaultlinkkkk" alt="vault">
+    </a>
+
     <script>
-        const dragItem = document.getElementById("draggable");
-        const coords = document.getElementById("coords");
-        let active = false;
-        let offsetX = 0, offsetY = 0;
-        let zIndexCounter = 1;
+        function unlockContent() {
+            let password = document.getElementById("password").value;
 
-        function startDrag(e) {
-            active = true;
-            const touch = e.touches ? e.touches[0] : e;
-            offsetX = touch.clientX - dragItem.getBoundingClientRect().left;
-            offsetY = touch.clientY - dragItem.getBoundingClientRect().top;
-            dragItem.style.cursor = "grabbing";
-            dragItem.style.zIndex = zIndexCounter++;
+            if (password === "YsPe608tit") {
+                document.getElementById("secret").classList.add("enabled");
+                document.getElementById("secret").classList.remove("blur-heavy");
+            } 
+            else if (password === "r5A094N1lwkAauK") {
+                let items = document.querySelectorAll(".menu-item");
+                items.forEach(item => {
+                    item.classList.add("enabled");
+                    item.classList.remove("blur-heavy");
+                });
+            } 
+            else {
+                alert("비밀번호가 틀렸습니다.");
+            }
         }
 
-        function onDrag(e) {
-            if (!active) return;
-            const touch = e.touches ? e.touches[0] : e;
-            let x = touch.clientX - offsetX;
-            let y = touch.clientY - offsetY;
-            dragItem.style.left = `${x}px`;
-            dragItem.style.top = `${y}px`;
-            coords.textContent = `X: ${x}px, Y: ${y}px, Z: ${dragItem.style.zIndex}`;
-        }
+        // 각 메뉴 클릭 시 이동
+        document.getElementById("diary").addEventListener("click", function() {
+            if (this.classList.contains("enabled")) {
+                window.location.href = "https://www.instagram.com/sexyyousoo/?__pwa=1";
+            }
+        });
 
-        function stopDrag() {
-            active = false;
-            dragItem.style.cursor = "grab";
-        }
+        document.getElementById("life-note").addEventListener("click", function() {
+            if (this.classList.contains("enabled")) {
+                window.location.href = "https://m.youtube.com/playlist?list=PLxefOlZhxI_1s42VUk1SMJpYwJKC4MK68";
+            }
+        });
 
-        dragItem.addEventListener("mousedown", startDrag);
-        dragItem.addEventListener("touchstart", startDrag);
+        document.getElementById("secret").addEventListener("click", function() {
+            if (this.classList.contains("enabled")) {
+                window.location.href = "https://yousoo68.github.io/SSUL/";
+            }
+        });
 
-        document.addEventListener("mousemove", onDrag);
-        document.addEventListener("touchmove", onDrag);
+        document.getElementById("cartoon").addEventListener("click", function() {
+            if (this.classList.contains("enabled")) {
+                window.location.href = "https://docs.google.com/document/u/0/d/1zFtfcSMpRMK2dg-sx1D2ladmQ3DV14aKxHfytMfRT2E/mobilebasic?fbclid=PAY2xjawIstlVleHRuA2FlbQIxMAABpsVKLg0NY2Dh3E96VC1f1BAmDoc9Si-Aurz6GEjHyAFHibcxV_HYi4Da1A_aem_6QJoWJi3HKdSITYRU8OtVQ&pli=1";
+            }
+        });
 
-        document.addEventListener("mouseup", stopDrag);
-        document.addEventListener("touchend", stopDrag);
+        document.getElementById("diy").addEventListener("click", function() {
+            if (this.classList.contains("enabled")) {
+                window.location.href = "https://m.youtube.com/playlist?list=PLxefOlZhxI_3HEZdLOfsV5hoLLUdz2Cbg";
+            }
+        });
+
     </script>
 </body>
 </html>
