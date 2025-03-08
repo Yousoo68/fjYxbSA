@@ -71,8 +71,7 @@
             border: none;
             text-decoration: none;
             opacity: 0.1;
-            filter: blur(10px);
-            transition: opacity 0.5s, filter 0.5s;
+            transition: opacity 0.5s;
         }
 
         .btn img {
@@ -85,7 +84,6 @@
             margin-top: 30000px;
             cursor: pointer;
             opacity: 0.1;
-            filter: blur(10px);
         }
 
         .vault-link img {
@@ -120,18 +118,14 @@
             display: none;
         }
 
-        .unblur {
-            opacity: 1 !important;
-            filter: blur(0px) !important;
-        }
-
         .disabled {
             pointer-events: none;
         }
 
-        .blurred {
-            opacity: 0.1 !important;
-            filter: blur(10px) !important;
+        /* 모자이크 효과 */
+        .mosaic {
+            filter: blur(8px);
+            -webkit-filter: blur(8px);
         }
     </style>
 </head>
@@ -179,13 +173,14 @@
             let passwordBox = document.getElementById("password-box");
 
             if (password === "YsPe608tit") {
-                document.querySelectorAll(".btn, .vault-link").forEach(el => el.classList.add("unblur"));
+                document.querySelectorAll(".btn, .vault-link").forEach(el => el.classList.remove("disabled"));
                 document.getElementById("ssul").classList.remove("disabled");
-                document.getElementById("diy").classList.add("blurred");
+                document.getElementById("diy").classList.add("disabled"); // DIY 버튼은 비활성화 상태로 유지
+                document.getElementById("diy").querySelector("img").classList.add("mosaic"); // DIY 버튼 이미지 모자이크 처리
+                document.getElementById("diy").classList.add("mosaic"); // DIY 버튼 텍스트 모자이크 처리
                 passwordBox.classList.add("hidden");
                 content.classList.remove("hidden");
             } else if (password === "r5A094N1lwkAauK") {
-                document.querySelectorAll(".btn, .vault-link").forEach(el => el.classList.add("unblur"));
                 document.querySelectorAll(".btn, .vault-link").forEach(el => el.classList.remove("disabled"));
                 passwordBox.classList.add("hidden");
                 content.classList.remove("hidden");
