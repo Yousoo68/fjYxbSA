@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>드래그 가능한 텍스트</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            position: absolute;
+            cursor: grab;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .coordinates {
+            display: block;
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.5);
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="draggable" class="container" style="top: 50%; left: 50%;">
+        <span>Hello</span>
+        <span id="coords" class="coordinates"></span>
+    </div>
+
+    <script>
+        const dragItem = document.getElementById("draggable");
+        const coords = document.getElementById("coords");
+
+        let active = false;
+        let offsetX = 0, offsetY = 0;
+
+        dragItem.addEventListener("mousedown", (e) => {
+            active = true;
+            offsetX = e.clientX - dragItem.getBoundingClientRect().left;
+            offsetY = e.clientY - dragItem.getBoundingClientRect().top;
+            dragItem.style.cursor = "grabbing";
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            if (!active) return;
+
+            let x = e.clientX - offsetX;
+            let y = e.clientY - offsetY;
+
+            dragItem.style.left = `${x}px`;
+            dragItem.style.top = `${y}px`;
+
+            coords.textContent = `X: ${x}px, Y: ${y}px`;
+        });
+
+        document.addEventListener("mouseup", () => {
+            active = false;
+            dragItem.style.cursor = "grab";
+        });
+    </script>
+
+</body>
+</html>
