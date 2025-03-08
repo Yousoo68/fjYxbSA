@@ -62,15 +62,16 @@
             height: 20px;
         }
 
-        /* 모자이크 효과 */
-        .pixelated {
-            image-rendering: pixelated;
-            filter: blur(3px);
+        /* DIY 모자이크 효과 */
+        @keyframes mosaic {
+            0% { filter: blur(3px); opacity: 0.6; }
+            50% { filter: blur(6px); opacity: 0.3; }
+            100% { filter: blur(3px); opacity: 0.6; }
         }
 
-        /* 모자이크 강도 조절 */
-        .pixelated-strong {
-            filter: blur(5px);
+        .mosaic-effect {
+            animation: mosaic 0.8s infinite alternate;
+            pointer-events: none;
         }
 
         /* 버튼 스타일 */
@@ -124,25 +125,25 @@
 
     <!-- 메뉴 -->
     <div id="menu">
-        <div class="menu-item blur-heavy" id="diary">
+        <div class="menu-item" id="diary">
             <img src="link1" alt="icon1">
             <span>섹시유수의 비밀 일기</span>
         </div>
-        <div class="menu-item blur-heavy" id="life-note">
+        <div class="menu-item" id="life-note">
             <img src="link4" alt="icon4">
             <span>인생노트</span>
         </div>
-        <div class="menu-item blur-heavy" id="secret">
+        <div class="menu-item" id="secret">
             <img src="link2" alt="icon2">
             <span>섹시유수의 비밀 썰</span>
         </div>
-        <div class="menu-item blur-heavy" id="cartoon">
+        <div class="menu-item" id="cartoon">
             <img src="link3" alt="icon3">
             <span>섹시유수 컷툰</span>
         </div>
-        <div class="menu-item blur-heavy" id="diy">
-            <img class="pixelated" src="link5" alt="icon5">
-            <span class="pixelated">DIY</span>
+        <div class="menu-item" id="diy">
+            <img src="link5" alt="icon5" id="diy-img">
+            <span id="diy-text">DIY</span>
         </div>
     </div>
 
@@ -154,29 +155,27 @@
     <script>
         function unlockContent() {
             let password = document.getElementById("password").value;
-            let diyImage = document.querySelector("#diy img");
-            let diyText = document.querySelector("#diy span");
 
             if (password === "YsPe608tit") {
+                // "섹시유수의 비밀 썰"만 활성화
                 document.getElementById("secret").classList.add("enabled");
                 document.getElementById("secret").classList.remove("blur-heavy");
 
-                // DIY만 모자이크 적용 (강도 설정 가능)
-                diyImage.classList.add("pixelated-strong");
-                diyText.classList.add("pixelated-strong");
+                // DIY 버튼과 이미지에 모자이크 효과 적용
+                document.getElementById("diy-img").classList.add("mosaic-effect");
+                document.getElementById("diy-text").classList.add("mosaic-effect");
             } 
             else if (password === "r5A094N1lwkAauK") {
+                // 모든 버튼 활성화
                 let items = document.querySelectorAll(".menu-item");
                 items.forEach(item => {
                     item.classList.add("enabled");
                     item.classList.remove("blur-heavy");
                 });
 
-                // DIY 모자이크 제거
-                diyImage.classList.remove("pixelated");
-                diyImage.classList.remove("pixelated-strong");
-                diyText.classList.remove("pixelated");
-                diyText.classList.remove("pixelated-strong");
+                // DIY 모자이크 효과 제거
+                document.getElementById("diy-img").classList.remove("mosaic-effect");
+                document.getElementById("diy-text").classList.remove("mosaic-effect");
             } 
             else {
                 alert("비밀번호가 틀렸습니다.");
@@ -204,7 +203,7 @@
 
         document.getElementById("cartoon").addEventListener("click", function() {
             if (this.classList.contains("enabled")) {
-                window.location.href = "https://docs.google.com/document/u/0/d/1zFtfcSMpRMK2dg-sx1D2ladmQ3DV14aKxHfytMfRT2E/mobilebasic";
+                window.location.href = "https://docs.google.com/document/u/0/d/1zFtfcSMpRMK2dg-sx1D2ladmQ3DV14aKxHfytMfRT2E/mobilebasic?fbclid=PAY2xjawIstlVleHRuA2FlbQIxMAABpsVKLg0NY2Dh3E96VC1f1BAmDoc9Si-Aurz6GEjHyAFHibcxV_HYi4Da1A_aem_6QJoWJi3HKdSITYRU8OtVQ&pli=1";
             }
         });
 
@@ -213,7 +212,7 @@
                 window.location.href = "https://m.youtube.com/playlist?list=PLxefOlZhxI_3HEZdLOfsV5hoLLUdz2Cbg";
             }
         });
-    </script>
 
+    </script>
 </body>
 </html>
