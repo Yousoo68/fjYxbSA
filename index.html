@@ -51,26 +51,20 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-top: 40px;
+            margin-top: 40px; /* 엔터 4칸 간격 */
             cursor: pointer;
             filter: blur(10px);
             transition: filter 0.3s ease-in-out;
         }
 
         .menu-item img {
-            width: 20px;
+            width: 20px; /* 17pt와 유사한 크기 */
             height: 20px;
         }
 
-        /* DIY 모자이크 효과 */
-        @keyframes mosaic {
-            0% { filter: blur(3px); opacity: 0.6; }
-            50% { filter: blur(6px); opacity: 0.3; }
-            100% { filter: blur(3px); opacity: 0.6; }
-        }
-
-        .mosaic-effect {
-            animation: mosaic 0.8s infinite alternate;
+        /* DIY 블러처리 */
+        .blur-heavy {
+            filter: blur(20px);
             pointer-events: none;
         }
 
@@ -125,25 +119,25 @@
 
     <!-- 메뉴 -->
     <div id="menu">
-        <div class="menu-item" id="diary">
+        <div class="menu-item blur-heavy" id="diary">
             <img src="link1" alt="icon1">
             <span>섹시유수의 비밀 일기</span>
         </div>
-        <div class="menu-item" id="life-note">
+        <div class="menu-item blur-heavy" id="life-note">
             <img src="link4" alt="icon4">
             <span>인생노트</span>
         </div>
-        <div class="menu-item" id="secret">
+        <div class="menu-item blur-heavy" id="secret">
             <img src="link2" alt="icon2">
             <span>섹시유수의 비밀 썰</span>
         </div>
-        <div class="menu-item" id="cartoon">
+        <div class="menu-item blur-heavy" id="cartoon">
             <img src="link3" alt="icon3">
             <span>섹시유수 컷툰</span>
         </div>
-        <div class="menu-item" id="diy">
-            <img src="link5" alt="icon5" id="diy-img">
-            <span id="diy-text">DIY</span>
+        <div class="menu-item blur-heavy" id="diy">
+            <img src="link5" alt="icon5">
+            <span class="blur-heavy">DIY</span>
         </div>
     </div>
 
@@ -157,25 +151,15 @@
             let password = document.getElementById("password").value;
 
             if (password === "YsPe608tit") {
-                // "섹시유수의 비밀 썰"만 활성화
                 document.getElementById("secret").classList.add("enabled");
                 document.getElementById("secret").classList.remove("blur-heavy");
-
-                // DIY 버튼과 이미지에 모자이크 효과 적용
-                document.getElementById("diy-img").classList.add("mosaic-effect");
-                document.getElementById("diy-text").classList.add("mosaic-effect");
             } 
             else if (password === "r5A094N1lwkAauK") {
-                // 모든 버튼 활성화
                 let items = document.querySelectorAll(".menu-item");
                 items.forEach(item => {
                     item.classList.add("enabled");
                     item.classList.remove("blur-heavy");
                 });
-
-                // DIY 모자이크 효과 제거
-                document.getElementById("diy-img").classList.remove("mosaic-effect");
-                document.getElementById("diy-text").classList.remove("mosaic-effect");
             } 
             else {
                 alert("비밀번호가 틀렸습니다.");
