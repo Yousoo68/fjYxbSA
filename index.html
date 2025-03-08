@@ -12,14 +12,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: white;
-            overflow-x: hidden;
+            justify-content: flex-start;
+            height: 100vh;
+            background-color: #fff;
+            overflow-y: auto;
         }
 
-        /* PC 접속 차단 */
-        @media screen and (min-width: 768px) {
+        /* PC 접속 방지 */
+        @media (min-width: 768px) {
             body::before {
                 content: "모바일에서만 접속 가능합니다.";
                 position: fixed;
@@ -29,170 +29,190 @@
                 font-size: 20px;
                 font-weight: bold;
                 color: red;
-                background: white;
-                padding: 20px;
-                z-index: 9999;
             }
-            * {
+            body * {
                 display: none;
             }
         }
 
-        .content {
+        /* 텍스트 스타일 */
+        .title {
             position: absolute;
-            top: 14.6px;
-            left: 10.6px;
-            text-align: center;
-            width: 90%;
-        }
-
-        h1 {
+            top: 14.59px;
+            left: 10.63px;
             font-size: 23pt;
             font-weight: bold;
             color: black;
         }
 
-        .button-container {
-            margin-top: 40px;
-        }
-
-        .btn {
+        .menu-item {
             font-size: 17pt;
-            font-weight: normal;
             color: black;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            padding: 10px;
-            margin: 40px 0;
-            width: fit-content;
+            gap: 10px;
+            margin-top: 40px;
             cursor: pointer;
-            background: none;
-            border: none;
-            text-decoration: none;
-            opacity: 0.1;
             filter: blur(10px);
-            transition: opacity 0.5s, filter 0.5s;
+            transition: filter 0.3s ease-in-out;
         }
 
-        .btn img {
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
+        .menu-item img {
+            width: 20px;
+            height: 20px;
         }
 
-        .vault-link {
-            margin-top: 500000000000000000000000000000000000000000000000000px;
-            cursor: pointer;
-            opacity: 0.1;
-            filter: blur(10px);
+        /* 모자이크 효과 */
+        .pixelated {
+            image-rendering: pixelated;
+            filter: blur(3px);
         }
 
-        .vault-link img {
-            width: 50px;
-            height: 50px;
+        /* 모자이크 강도 조절 */
+        .pixelated-strong {
+            filter: blur(5px);
         }
 
+        /* 버튼 스타일 */
+        .menu-item.enabled {
+            filter: blur(0);
+            pointer-events: auto;
+        }
+
+        /* 비밀번호 입력 영역 */
         .password-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            text-align: center;
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .password-container input {
+        .password-input {
+            padding: 10px;
             font-size: 16px;
-            padding: 5px;
             margin-bottom: 10px;
         }
 
-        .password-container button {
+        .password-button {
+            padding: 10px 20px;
             font-size: 16px;
-            padding: 5px 10px;
+            background-color: black;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
 
-        .hidden {
-            display: none;
+        /* 하단 링크 */
+        .vault-button {
+            margin-top: 200px;
+            filter: blur(10px);
         }
 
-        .unblur {
-            opacity: 1 !important;
-            filter: blur(0px) !important;
-        }
-
-        .disabled {
-            pointer-events: none;
-        }
-
-        .blurred {
-            opacity: 0.1 !important;
-            filter: blur(10px) !important;
+        .vault-button.enabled {
+            filter: blur(0);
         }
     </style>
 </head>
 <body>
 
-    <div class="password-container" id="password-box">
-        <p>비밀번호 입력:</p>
-        <input type="password" id="password">
-        <button onclick="checkPassword()">확인</button>
+    <div class="title">섹시유수 갤러리</div>
+
+    <div class="password-container">
+        <input type="password" id="password" class="password-input" placeholder="비밀번호 입력">
+        <button onclick="unlockContent()" class="password-button">확인</button>
     </div>
 
-    <div class="content hidden" id="content">
-        <h1>섹시유수 갤러리</h1>
-        <div class="button-container">
-            <a class="btn disabled" id="diary" href="https://www.instagram.com/sexyyousoo/?__pwa=1">
-                <img src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/Insta.jpg" alt="diary">
-                섹시유수의 비밀 일기
-            </a>
-            <a class="btn disabled" id="note" href="https://m.youtube.com/playlist?list=PLxefOlZhxI_1s42VUk1SMJpYwJKC4MK68">
-                <img src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/Note.jpg" alt="note">
-                인생노트
-            </a>
-            <a class="btn disabled" id="ssul" href="https://yousoo68.github.io/SSUL/">
-                <img src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/SSUL.jpg" alt="ssul">
-                섹시유수의 비밀 썰
-            </a>
-            <a class="btn disabled" id="cuttoon" href="https://docs.google.com/document/u/0/d/1zFtfcSMpRMK2dg-sx1D2ladmQ3DV14aKxHfytMfRT2E/mobilebasic?fbclid=PAY2xjawIstlVleHRuA2FlbQIxMAABpsVKLg0NY2Dh3E96VC1f1BAmDoc9Si-Aurz6GEjHyAFHibcxV_HYi4Da1A_aem_6QJoWJi3HKdSITYRU8OtVQ&pli=1">
-                <img src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/CutToon.jpg" alt="cuttoon">
-                섹시유수 컷툰
-            </a>
-            <a class="btn disabled" id="diy" href="https://m.youtube.com/playlist?list=PLxefOlZhxI_3HEZdLOfsV5hoLLUdz2Cbg">
-                <img src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/DIY.jpg" alt="diy">
-                DIY
-            </a>
+    <!-- 메뉴 -->
+    <div id="menu">
+        <div class="menu-item blur-heavy" id="diary">
+            <img src="link1" alt="icon1">
+            <span>섹시유수의 비밀 일기</span>
         </div>
-        <a class="vault-link disabled" id="vault" href="https://yousoo68.github.io/IHTgAiw/">
-            <img src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/Vault.jpg" alt="vault">
-        </a>
+        <div class="menu-item blur-heavy" id="life-note">
+            <img src="link4" alt="icon4">
+            <span>인생노트</span>
+        </div>
+        <div class="menu-item blur-heavy" id="secret">
+            <img src="link2" alt="icon2">
+            <span>섹시유수의 비밀 썰</span>
+        </div>
+        <div class="menu-item blur-heavy" id="cartoon">
+            <img src="link3" alt="icon3">
+            <span>섹시유수 컷툰</span>
+        </div>
+        <div class="menu-item blur-heavy" id="diy">
+            <img class="pixelated" src="link5" alt="icon5">
+            <span class="pixelated">DIY</span>
+        </div>
     </div>
+
+    <!-- Vault 버튼 -->
+    <a href="https://yousoo68.github.io/IHTgAiw/" class="vault-button" id="vault-link">
+        <img src="vaultlinkkkk" alt="vault">
+    </a>
 
     <script>
-        function checkPassword() {
+        function unlockContent() {
             let password = document.getElementById("password").value;
-            let content = document.getElementById("content");
-            let passwordBox = document.getElementById("password-box");
+            let diyImage = document.querySelector("#diy img");
+            let diyText = document.querySelector("#diy span");
 
             if (password === "YsPe608tit") {
-                document.querySelectorAll(".btn, .vault-link").forEach(el => el.classList.add("unblur"));
-                document.getElementById("ssul").classList.remove("disabled");
-                document.getElementById("diy").classList.add("blurred");
-                passwordBox.classList.add("hidden");
-                content.classList.remove("hidden");
-            } else if (password === "r5A094N1lwkAauK") {
-                document.querySelectorAll(".btn, .vault-link").forEach(el => el.classList.add("unblur"));
-                document.querySelectorAll(".btn, .vault-link").forEach(el => el.classList.remove("disabled"));
-                passwordBox.classList.add("hidden");
-                content.classList.remove("hidden");
-            } else {
+                document.getElementById("secret").classList.add("enabled");
+                document.getElementById("secret").classList.remove("blur-heavy");
+
+                // DIY만 모자이크 적용 (강도 설정 가능)
+                diyImage.classList.add("pixelated-strong");
+                diyText.classList.add("pixelated-strong");
+            } 
+            else if (password === "r5A094N1lwkAauK") {
+                let items = document.querySelectorAll(".menu-item");
+                items.forEach(item => {
+                    item.classList.add("enabled");
+                    item.classList.remove("blur-heavy");
+                });
+
+                // DIY 모자이크 제거
+                diyImage.classList.remove("pixelated");
+                diyImage.classList.remove("pixelated-strong");
+                diyText.classList.remove("pixelated");
+                diyText.classList.remove("pixelated-strong");
+            } 
+            else {
                 alert("비밀번호가 틀렸습니다.");
             }
         }
+
+        // 각 메뉴 클릭 시 이동
+        document.getElementById("diary").addEventListener("click", function() {
+            if (this.classList.contains("enabled")) {
+                window.location.href = "https://www.instagram.com/sexyyousoo/?__pwa=1";
+            }
+        });
+
+        document.getElementById("life-note").addEventListener("click", function() {
+            if (this.classList.contains("enabled")) {
+                window.location.href = "https://m.youtube.com/playlist?list=PLxefOlZhxI_1s42VUk1SMJpYwJKC4MK68";
+            }
+        });
+
+        document.getElementById("secret").addEventListener("click", function() {
+            if (this.classList.contains("enabled")) {
+                window.location.href = "https://yousoo68.github.io/SSUL/";
+            }
+        });
+
+        document.getElementById("cartoon").addEventListener("click", function() {
+            if (this.classList.contains("enabled")) {
+                window.location.href = "https://docs.google.com/document/u/0/d/1zFtfcSMpRMK2dg-sx1D2ladmQ3DV14aKxHfytMfRT2E/mobilebasic";
+            }
+        });
+
+        document.getElementById("diy").addEventListener("click", function() {
+            if (this.classList.contains("enabled")) {
+                window.location.href = "https://m.youtube.com/playlist?list=PLxefOlZhxI_3HEZdLOfsV5hoLLUdz2Cbg";
+            }
+        });
     </script>
 
 </body>
