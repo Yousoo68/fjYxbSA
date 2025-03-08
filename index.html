@@ -122,11 +122,11 @@
             pointer-events: none;
         }
 
-        /* 모자이크 효과 */
         .mosaic {
-            filter: blur(8px);
-            -webkit-filter: blur(8px);
+            filter: blur(10px);
+            opacity: 0.5;
         }
+
     </style>
 </head>
 <body>
@@ -176,10 +176,17 @@
                 document.querySelectorAll(".btn, .vault-link").forEach(el => el.classList.remove("disabled"));
                 document.getElementById("ssul").classList.remove("disabled");
                 document.getElementById("diy").classList.add("disabled"); // DIY 버튼은 비활성화 상태로 유지
-                document.getElementById("diy").querySelector("img").classList.add("mosaic"); // DIY 버튼 이미지 모자이크 처리
-                document.getElementById("diy").classList.add("mosaic"); // DIY 버튼 텍스트 모자이크 처리
+                document.getElementById("diy").classList.add("mosaic"); // DIY 버튼을 모자이크 처리
                 passwordBox.classList.add("hidden");
                 content.classList.remove("hidden");
+
+                // "섹시유수의 비밀 썰" 제외한 버튼 비활성화
+                let buttons = document.querySelectorAll(".btn");
+                buttons.forEach(btn => {
+                    if (btn.id !== "ssul") {
+                        btn.classList.add("disabled");
+                    }
+                });
             } else if (password === "r5A094N1lwkAauK") {
                 document.querySelectorAll(".btn, .vault-link").forEach(el => el.classList.remove("disabled"));
                 passwordBox.classList.add("hidden");
