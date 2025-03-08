@@ -33,6 +33,7 @@
             font-size: 24px;
             font-weight: bold;
             text-align: center;
+            touch-action: none;
         }
 
         .coordinates {
@@ -58,27 +59,38 @@
         let offsetX = 0, offsetY = 0;
         let zIndexCounter = 1;
 
-        dragItem.addEventListener("mousedown", (e) => {
+        function startDrag(e) {
             active = true;
-            offsetX = e.clientX - dragItem.getBoundingClientRect().left;
-            offsetY = e.clientY - dragItem.getBoundingClientRect().top;
+            const touch = e.touches ? e.touches[0] : e;
+            offsetX = touch.clientX - dragItem.getBoundingClientRect().left;
+            offsetY = touch.clientY - dragItem.getBoundingClientRect().top;
             dragItem.style.cursor = "grabbing";
             dragItem.style.zIndex = zIndexCounter++;
-        });
+        }
 
-        document.addEventListener("mousemove", (e) => {
+        function onDrag(e) {
             if (!active) return;
-            let x = e.clientX - offsetX;
-            let y = e.clientY - offsetY;
+            const touch = e.touches ? e.touches[0] : e;
+            let x = touch.clientX - offsetX;
+            let y = touch.clientY - offsetY;
             dragItem.style.left = `${x}px`;
             dragItem.style.top = `${y}px`;
             coords.textContent = `X: ${x}px, Y: ${y}px, Z: ${dragItem.style.zIndex}`;
-        });
+        }
 
-        document.addEventListener("mouseup", () => {
+        function stopDrag() {
             active = false;
             dragItem.style.cursor = "grab";
-        });
+        }
+
+        dragItem.addEventListener("mousedown", startDrag);
+        dragItem.addEventListener("touchstart", startDrag);
+
+        document.addEventListener("mousemove", onDrag);
+        document.addEventListener("touchmove", onDrag);
+
+        document.addEventListener("mouseup", stopDrag);
+        document.addEventListener("touchend", stopDrag);
     </script>
 </body>
 </html>
