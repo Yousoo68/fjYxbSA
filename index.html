@@ -32,6 +32,14 @@
             cursor: grab;
             font-size: 24px;
             font-weight: bold;
+            text-align: center;
+        }
+
+        .coordinates {
+            display: block;
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.5);
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -39,19 +47,23 @@
     <div class="border-box">
         <div id="draggable" class="container">
             <span>Hello</span>
+            <span id="coords" class="coordinates">X: 0px, Y: 0px, Z: 0</span>
         </div>
     </div>
 
     <script>
         const dragItem = document.getElementById("draggable");
+        const coords = document.getElementById("coords");
         let active = false;
         let offsetX = 0, offsetY = 0;
+        let zIndexCounter = 1;
 
         dragItem.addEventListener("mousedown", (e) => {
             active = true;
             offsetX = e.clientX - dragItem.getBoundingClientRect().left;
             offsetY = e.clientY - dragItem.getBoundingClientRect().top;
             dragItem.style.cursor = "grabbing";
+            dragItem.style.zIndex = zIndexCounter++;
         });
 
         document.addEventListener("mousemove", (e) => {
@@ -60,6 +72,7 @@
             let y = e.clientY - offsetY;
             dragItem.style.left = `${x}px`;
             dragItem.style.top = `${y}px`;
+            coords.textContent = `X: ${x}px, Y: ${y}px, Z: ${dragItem.style.zIndex}`;
         });
 
         document.addEventListener("mouseup", () => {
