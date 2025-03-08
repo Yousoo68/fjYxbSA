@@ -15,32 +15,35 @@
             background-color: #f4f4f4;
         }
 
+        .border-box {
+            position: relative;
+            width: 90vw;
+            height: 160vw;
+            max-width: 360px;
+            max-height: 640px;
+            border: 3px solid blue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .container {
             position: absolute;
             cursor: grab;
             font-size: 24px;
             font-weight: bold;
         }
-
-        .coordinates {
-            display: block;
-            font-size: 14px;
-            color: rgba(0, 0, 0, 0.5);
-            margin-top: 5px;
-        }
     </style>
 </head>
 <body>
-
-    <div id="draggable" class="container" style="top: 50%; left: 50%;">
-        <span>Hello</span>
-        <span id="coords" class="coordinates"></span>
+    <div class="border-box">
+        <div id="draggable" class="container">
+            <span>Hello</span>
+        </div>
     </div>
 
     <script>
         const dragItem = document.getElementById("draggable");
-        const coords = document.getElementById("coords");
-
         let active = false;
         let offsetX = 0, offsetY = 0;
 
@@ -53,14 +56,10 @@
 
         document.addEventListener("mousemove", (e) => {
             if (!active) return;
-
             let x = e.clientX - offsetX;
             let y = e.clientY - offsetY;
-
             dragItem.style.left = `${x}px`;
             dragItem.style.top = `${y}px`;
-
-            coords.textContent = `X: ${x}px, Y: ${y}px`;
         });
 
         document.addEventListener("mouseup", () => {
@@ -68,6 +67,5 @@
             dragItem.style.cursor = "grab";
         });
     </script>
-
 </body>
 </html>
