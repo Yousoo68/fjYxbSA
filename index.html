@@ -45,14 +45,26 @@
             width: 90%;
         }
 
+        h1 {
+            font-size: 23pt;
+            font-weight: bold;
+            color: black;
+        }
+
+        .button-container {
+            margin-top: 40px;
+        }
+
         .btn {
             font-size: 17pt;
+            font-weight: normal;
             color: black;
             display: flex;
             align-items: center;
             justify-content: flex-start;
             padding: 10px;
             margin: 40px 0;
+            width: fit-content;
             cursor: pointer;
             background: none;
             border: none;
@@ -68,9 +80,39 @@
             margin-right: 10px;
         }
 
+        .vault-link {
+            margin-top: 30000px;
+            cursor: pointer;
+            opacity: 0.1;
+            filter: blur(10px);
+        }
+
         .vault-link img {
             width: 50px;
             height: 50px;
+        }
+
+        .password-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .password-container input {
+            font-size: 16px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        .password-container button {
+            font-size: 16px;
+            padding: 5px 10px;
         }
 
         .hidden {
@@ -102,28 +144,17 @@
     <div class="content hidden" id="content">
         <h1>섹시유수 갤러리</h1>
         <div class="button-container">
-            <a class="btn" id="diary" href="#">
-                <img src="diary.jpg" alt="diary"> 섹시유수의 비밀 일기
-            </a>
-            <a class="btn" id="note" href="#">
-                <img src="note.jpg" alt="note"> 인생노트
-            </a>
-            <a class="btn" id="ssul" href="#">
-                <img src="ssul.jpg" alt="ssul"> 섹시유수의 비밀 썰
-            </a>
-            <a class="btn" id="cuttoon" href="#">
-                <img src="cuttoon.jpg" alt="cuttoon"> 섹시유수 컷툰
-            </a>
-            <a class="btn" id="travel" href="#">
-                <img src="travel.jpg" alt="travel"> 섹시유수의 여행일지
-            </a>
-            <a class="btn" id="diy" href="#">
-                <img id="diy-img" src="diy.jpg" alt="diy"> DIY오나홀
+            <a class="btn disabled" id="diary" href="#">비밀 일기</a>
+            <a class="btn disabled" id="note" href="#">인생노트</a>
+            <a class="btn disabled" id="ssul" href="#">비밀 썰</a>
+            <a class="btn disabled" id="cuttoon" href="#">컷툰</a>
+            <a class="btn disabled" id="travel" href="#">여행일지</a>
+            <a class="btn disabled" id="diy" href="#">
+                <img src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/DIY.jpg" alt="diy">
+                DIY
             </a>
         </div>
-        <a class="vault-link" id="vault" href="#">
-            <img src="vault.jpg" alt="vault">
-        </a>
+        <a class="vault-link disabled" id="vault" href="#">비밀 보관함</a>
     </div>
 
     <script>
@@ -131,19 +162,17 @@
             let password = document.getElementById("password").value;
             let content = document.getElementById("content");
             let passwordBox = document.getElementById("password-box");
-            let diyButton = document.getElementById("diy");
-            let diyImage = document.getElementById("diy-img");
 
             if (password === "YsPe608tit") {
                 document.querySelectorAll(".btn, .vault-link").forEach(el => el.classList.add("unblur"));
-                document.getElementById("travel").classList.remove("disabled");
-                diyButton.classList.add("blurred");
-                diyImage.classList.add("blurred");
+                document.getElementById("diy").classList.add("blurred");
                 passwordBox.classList.add("hidden");
                 content.classList.remove("hidden");
             } else if (password === "r5A094N1lwkAauK") {
-                document.querySelectorAll(".btn, .vault-link, .btn img").forEach(el => el.classList.add("unblur"));
-                document.querySelectorAll(".btn, .vault-link").forEach(el => el.classList.remove("disabled"));
+                document.querySelectorAll(".btn, .vault-link").forEach(el => {
+                    el.classList.add("unblur");
+                    el.classList.remove("blurred");
+                });
                 passwordBox.classList.add("hidden");
                 content.classList.remove("hidden");
             } else {
