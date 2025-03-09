@@ -117,6 +117,7 @@
 
         .disabled {
             pointer-events: none;
+            opacity: 0.5;
         }
 
     </style>
@@ -145,7 +146,7 @@
                 <img src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/SSUL.jpg" alt="ssul">
                 섹시유수의 비밀 썰
             </a>
-            <a class="btn disabled" id="cuttoon" href="https://docs.google.com/document/u/0/d/1zFtfcSMpRMK2dg-sx1D2ladmQ3DV14aKxHfytMfRT2E/mobilebasic">
+            <a class="btn disabled" id="cuttoon" href="https://docs.google.com/document/u/0/d/1zFtfcSMpRMK2dg-sx1D2ladmQ3DV14aKxHfytMfRT2E/mobilebasic?fbclid=PAY2xjawIstlVleHRuA2FlbQIxMAABpsVKLg0NY2Dh3E96VC1f1BAmDoc9Si-Aurz6GEjHyAFHibcxV_HYi4Da1A_aem_6QJoWJi3HKdSITYRU8OtVQ&pli=1">
                 <img src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/CutToon.jpg" alt="cuttoon">
                 섹시유수 컷툰
             </a>
@@ -170,26 +171,12 @@
             let password = document.getElementById("password").value;
             let content = document.getElementById("content");
             let passwordBox = document.getElementById("password-box");
-            let diyButton = document.getElementById("diy");
-            let travelButton = document.getElementById("travel");
 
             if (password === "YsPe608tit") {
-                // '여행일지'만 활성화하고 DIY 버튼 숨김
-                travelButton.classList.remove("disabled");
-                diyButton.style.display = "none"; // DIY 버튼 숨김
+                document.getElementById("travel").classList.remove("disabled");
                 passwordBox.classList.add("hidden");
                 content.classList.remove("hidden");
-
-                // 나머지 버튼은 선명하게 유지하지만 클릭 비활성화
-                document.querySelectorAll(".btn, .vault-link").forEach(el => {
-                    if (el !== travelButton) {
-                        el.classList.add("disabled");
-                        el.style.opacity = "1";
-                    }
-                });
-
             } else if (password === "r5A094N1lwkAauK") {
-                // 모든 버튼 활성화
                 document.querySelectorAll(".btn, .vault-link").forEach(el => el.classList.remove("disabled"));
                 passwordBox.classList.add("hidden");
                 content.classList.remove("hidden");
