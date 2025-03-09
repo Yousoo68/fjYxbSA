@@ -171,9 +171,11 @@
             let password = document.getElementById("password").value;
             let content = document.getElementById("content");
             let passwordBox = document.getElementById("password-box");
+            let diyButton = document.getElementById("diy");
 
             if (password === "YsPe608tit") {
                 document.getElementById("travel").classList.remove("disabled");
+                diyButton.classList.add("hidden"); // DIY 버튼 숨김
                 passwordBox.classList.add("hidden");
                 content.classList.remove("hidden");
             } else if (password === "r5A094N1lwkAauK") {
