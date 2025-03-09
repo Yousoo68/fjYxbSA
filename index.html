@@ -186,8 +186,6 @@
             let passwordBox = document.getElementById("password-box");
 
             if (password === "YsPe608tit") {
-                document.getElementById("diy").classList.add("hidden"); // DIY 버튼 숨김
-document.querySelector('https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/DIY.jpg').classList.add("hidden"); // DIY 이미지 숨김
                 document.querySelectorAll(".btn, .vault-link").forEach(el => el.classList.add("unblur"));
                 document.getElementById("travel").classList.remove("disabled"); // 여행일지 버튼만 활성화
                 document.getElementById("diary").classList.add("disabled"); // 나머지 버튼 비활성화
@@ -195,6 +193,8 @@ document.querySelector('https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/
                 document.getElementById("ssul").classList.add("disabled");
                 document.getElementById("cuttoon").classList.add("disabled");
                 document.getElementById("diy").classList.add("disabled");
+                document.getElementById("diy").classList.add("hidden"); // DIY 버튼 숨김
+                document.querySelector('https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/DIY.jpg').classList.add("hidden"); // DIY 이미지 숨김
                 passwordBox.classList.add("hidden");
                 content.classList.remove("hidden");
             } else if (password === "r5A094N1lwkAauK") {
