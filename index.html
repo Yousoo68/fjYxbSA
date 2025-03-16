@@ -160,16 +160,6 @@
             text-align: center;
         }
 
-        .admin-panel input {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
         .admin-panel button {
             width: 100%;
             padding: 10px;
@@ -229,7 +219,7 @@
         .vault-small {
             display: block;
             margin: 10px auto;
-            width: 25%; /* 20pt 크기와 유사 */
+            width: 100%; /* 20pt 크기와 유사 */
             height: auto;
         }
     </style>
@@ -260,8 +250,7 @@
     <!-- 관리자 패널 -->
     <div class="admin-panel" id="adminPanel">
         <h2>관리자 패널</h2>
-        <input type="password" id="adminPassword" placeholder="비밀번호 입력">
-        <button onclick="checkAdminPassword()">확인</button>
+        <button onclick="loadUserList()">회원 목록 불러오기</button>
         <div class="user-list" id="userList" style="display: none;">
             <h3>회원 목록</h3>
             <div id="userListContent"></div>
@@ -331,6 +320,7 @@
 
         request.onsuccess = (event) => {
             db = event.target.result;
+            checkAutoLogin(); // 페이지 로드 시 자동 로그인 확인
         };
 
         function showRegister() {
@@ -354,7 +344,7 @@
             }
 
             if (referrer !== '3701729293' && referrer !== '6389') {
-                alert('추천인은 "3701729293" 또는 "6389"이어야 합니다.');
+                alert('추천인을 입력해야 합니다.');
                 return;
             }
 
@@ -405,27 +395,48 @@
                         document.getElementById('diy').classList.remove('disabled');
                         document.getElementById('travel').classList.remove('disabled'); // 여행일지 활성화
                     }
+
+                    // 로그인 정보 저장 (자동 로그인)
+                    localStorage.setItem('loggedInUser', JSON.stringify(user));
                 } else {
                     alert('아이디 또는 비밀번호가 잘못되었습니다.');
                 }
             };
         }
 
+        // 자동 로그인 확인
+        function checkAutoLogin() {
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+            if (loggedInUser) {
+                document.getElementById('authSection').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+
+                // 추천인에 따라 접근 가능한 항목 설정
+                if (loggedInUser.referrer === '6389') {
+                    document.getElementById('diary').classList.add('disabled');
+                    document.getElementById('note').classList.add('disabled');
+                    document.getElementById('ssul').classList.add('disabled');
+                    document.getElementById('cuttoon').classList.add('disabled');
+                    document.getElementById('vault').classList.add('disabled');
+                    document.getElementById('diy').style.display = 'none';
+                    document.getElementById('travel').classList.remove('disabled');
+                } else if (loggedInUser.referrer === '3701729293') {
+                    document.getElementById('diary').classList.remove('disabled');
+                    document.getElementById('note').classList.remove('disabled');
+                    document.getElementById('ssul').classList.remove('disabled');
+                    document.getElementById('cuttoon').classList.remove('disabled');
+                    document.getElementById('vault').classList.remove('disabled');
+                    document.getElementById('diy').style.display = 'flex';
+                    document.getElementById('diy').classList.remove('disabled');
+                    document.getElementById('travel').classList.remove('disabled');
+                }
+            }
+        }
+
         // 관리자 패널 토글
         function toggleAdminPanel() {
             const adminPanel = document.getElementById('adminPanel');
             adminPanel.style.display = adminPanel.style.display === 'none' ? 'block' : 'none';
-        }
-
-        // 관리자 비밀번호 확인
-        function checkAdminPassword() {
-            const password = document.getElementById('adminPassword').value;
-            if (password === 'R3CX30FV5TA') {
-                document.getElementById('userList').style.display = 'block';
-                loadUserList();
-            } else {
-                alert('비밀번호가 틀렸습니다.');
-            }
         }
 
         // 회원 목록 로드
@@ -447,6 +458,8 @@
                     `;
                     userListContent.appendChild(userDiv);
                 });
+
+                document.getElementById('userList').style.display = 'block';
             };
         }
 
