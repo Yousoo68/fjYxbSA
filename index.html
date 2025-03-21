@@ -17,27 +17,6 @@
             background-color: white;
             overflow-x: hidden;
         }
-
-        /* PC 접속 차단 */
-        @media screen and (min-width: 768px) {
-            body::before {
-                content: "모바일에서만 접속 가능합니다.";
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                font-size: 20px;
-                font-weight: bold;
-                color: red;
-                background: white;
-                padding: 20px;
-                z-index: 9999;
-            }
-            * {
-                display: none;
-            }
-        }
-
         .content {
             display: none; /* 로그인 전까지 숨김 */
             text-align: center;
