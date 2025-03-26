@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ㅤ</title>
+    <title>섹시유수 갤러리</title>
     <style>
         body, html {
             margin: 0;
@@ -11,6 +11,7 @@
             height: 100%;
             overflow: hidden;
         }
+        
         .fullscreen-image {
             width: 100vw;
             height: 100vh;
@@ -18,13 +19,15 @@
             position: fixed;
             top: 0;
             left: 0;
+            pointer-events: none; /* 클릭 이벤트 비활성화 */
         }
     </style>
     <script>
+        // 페이지 로드 후 0.1초 뒤 리디렉션
         window.onload = function() {
             setTimeout(function() {
                 window.location.href = "http://www.warning.or.kr/";
-            }, 100); // 0.1초 후 리디렉션
+            }, 100);
         };
     </script>
 </head>
