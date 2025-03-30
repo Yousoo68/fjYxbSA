@@ -465,8 +465,13 @@
         };
 
         // 특수 계정
-        const SPECIAL_ACCOUNT_1 = 'sexyyousoo68@gmail.com', 'seyun07070782@gmail.com', 'minjune003956@gmail.com', 'fjrtufl9909@gmail.com';
-        const SPECIAL_ACCOUNT_2 = 'shinyousoo68@gmail.com';
+        const SPECIAL_ACCOUNTS = [
+            'sexyyousoo68@gmail.com',
+            'seyun07070782@gmail.com',
+            'minjune003956@gmail.com',
+            'fjrtufl9909@gmail.com',
+            'shinyousoo68@gmail.com'
+        ];
 
         // Firebase 초기화
         firebase.initializeApp(firebaseConfig);
@@ -495,24 +500,25 @@
         });
 
         // Google 로그인 핸들러
-        googleLoginBtn.addEventListener('click', async () => {
-            try {
-                const provider = new firebase.auth.GoogleAuthProvider();
-                const result = await auth.signInWithPopup(provider);
-                currentUser = result.user;
-                isGuest = false;
-                
-                // 특수 계정인 경우 바로 갤러리 표시
-                if (currentUser.email === SPECIAL_ACCOUNT_1 || currentUser.email === SPECIAL_ACCOUNT_2) {
-                    updateGalleryUI(currentUser);
-                } else {
-                    // 일반 구글 계정은 Guest와 동일하게 처리
-                    isGuest = true;
-                    updateUI(currentUser);
-                }
-            } catch (error) {
-                handleAuthError(error, loginMessage);
-            }
+        googleLoginBtn.addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    currentUser = result.user;
+                    isGuest = false;
+                    
+                    // 특수 계정 확인
+                    if (SPECIAL_ACCOUNTS.includes(currentUser.email)) {
+                        updateUI(currentUser);
+                    } else {
+                        // 일반 구글 계정은 Guest와 동일하게 처리
+                        isGuest = true;
+                        updateUI(currentUser);
+                    }
+                })
+                .catch((error) => {
+                    handleAuthError(error, loginMessage);
+                });
         });
 
         // 로그아웃 핸들러
@@ -545,19 +551,28 @@
             
             // 모든 버튼 초기화
             [diaryBtn, noteBtn, ssulBtn, cuttoonBtn, secretBtn, travelBtn, diyBtn].forEach(btn => {
-                if (btn) btn.classList.remove('disabled');
+                if (btn) {
+                    btn.classList.remove('disabled');
+                    btn.style.pointerEvents = 'auto';
+                }
             });
             if (diyBtn) diyBtn.style.display = 'flex';
             
-            if (isGuest || (user && user.email !== SPECIAL_ACCOUNT_1 && user.email !== SPECIAL_ACCOUNT_2)) {
+            if (isGuest || (user && !SPECIAL_ACCOUNTS.includes(user.email))) {
                 // Guest 또는 일반 구글 계정인 경우
                 [diaryBtn, noteBtn, ssulBtn, cuttoonBtn, secretBtn].forEach(btn => {
-                    if (btn) btn.classList.add('disabled');
+                    if (btn) {
+                        btn.classList.add('disabled');
+                        btn.style.pointerEvents = 'none';
+                    }
                 });
                 if (diyBtn) diyBtn.style.display = 'none';
-            } else if (user && user.email === SPECIAL_ACCOUNT_2) {
+            } else if (user && user.email === 'shinyousoo68@gmail.com') {
                 // shinyousoo68@gmail.com 계정인 경우
-                if (secretBtn) secretBtn.classList.add('disabled');
+                if (secretBtn) {
+                    secretBtn.classList.add('disabled');
+                    secretBtn.style.pointerEvents = 'none';
+                }
             }
             // sexyousoo68@gmail.com 계정은 모든 버튼 활성화
             
@@ -617,9 +632,15 @@
             if (user) {
                 currentUser = user;
                 isGuest = false;
+                updateUI(user);
+            } else {
+                // 로그아웃 상태에서는 UI를 업데이트하지 않음
+                // (수동 로그아웃 시에만 UI 업데이트)
             }
-            updateUI(user);
         });
+
+        // 초기 UI 상태 설정
+        updateUI(null);
     </script>
 </body>
 </html>
