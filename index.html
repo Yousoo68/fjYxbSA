@@ -464,13 +464,18 @@
             measurementId: "G-MJB1NJH05M"
         };
 
-        // 특수 계정
-        const SPECIAL_ACCOUNTS = [
+        // 특수 계정 분리
+        const FULL_ACCESS_ACCOUNTS = [
             'sexyyousoo68@gmail.com',
+            'seojunna73@gmail.com',
             'seyun07070782@gmail.com',
             'minjune003956@gmail.com',
-            'fjrtufl9909@gmail.com',
-            'shinyousoo68@gmail.com'
+            'fjrtufl9909@gmail.com'
+        ];
+
+        const LIMITED_ACCESS_ACCOUNTS = [
+            'shinyousoo68@gmail.com',
+            'moonhs0720@gmail.com'
         ];
 
         // Firebase 초기화
@@ -506,15 +511,7 @@
                 .then((result) => {
                     currentUser = result.user;
                     isGuest = false;
-                    
-                    // 특수 계정 확인
-                    if (SPECIAL_ACCOUNTS.includes(currentUser.email)) {
-                        updateUI(currentUser);
-                    } else {
-                        // 일반 구글 계정은 Guest와 동일하게 처리
-                        isGuest = true;
-                        updateUI(currentUser);
-                    }
+                    updateUI(currentUser);
                 })
                 .catch((error) => {
                     handleAuthError(error, loginMessage);
@@ -554,12 +551,12 @@
                 if (btn) {
                     btn.classList.remove('disabled');
                     btn.style.pointerEvents = 'auto';
+                    btn.style.display = 'flex';
                 }
             });
-            if (diyBtn) diyBtn.style.display = 'flex';
             
-            if (isGuest || (user && !SPECIAL_ACCOUNTS.includes(user.email))) {
-                // Guest 또는 일반 구글 계정인 경우
+            if (isGuest) {
+                // Guest 계정인 경우
                 [diaryBtn, noteBtn, ssulBtn, cuttoonBtn, secretBtn].forEach(btn => {
                     if (btn) {
                         btn.classList.add('disabled');
@@ -567,14 +564,15 @@
                     }
                 });
                 if (diyBtn) diyBtn.style.display = 'none';
-            } else if (user && user.email === 'shinyousoo68@gmail.com') {
-                // shinyousoo68@gmail.com 계정인 경우
+            } 
+            else if (user && LIMITED_ACCESS_ACCOUNTS.includes(user.email)) {
+                // LIMITED_ACCESS_ACCOUNTS 계정인 경우 (비밀번호 모음만 비활성화)
                 if (secretBtn) {
                     secretBtn.classList.add('disabled');
                     secretBtn.style.pointerEvents = 'none';
                 }
             }
-            // sexyousoo68@gmail.com 계정은 모든 버튼 활성화
+            // FULL_ACCESS_ACCOUNTS 계정은 모든 버튼 활성화
             
             // 갤러리 표시
             if (authSection) authSection.style.display = 'none';
