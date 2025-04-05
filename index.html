@@ -609,7 +609,7 @@
             else if (user && LIMITED_ACCESS_ACCOUNTS.includes(user.email)) {
                 // LIMITED_ACCESS_ACCOUNTS 계정인 경우 (비밀번호 모음만 비활성화)
                 if (secretBtn) {
-                    secretBtn.classList.add('disabled');
+                    secretBtn.classList.add('abled');
                     secretBtn.style.pointerEvents = 'none';
                 }
             }
