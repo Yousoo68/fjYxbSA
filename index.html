@@ -6,45 +6,57 @@
     <title>섹시유수 갤러리</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
-        :root {
-            --primary: #4361ee; --secondary: #3f37c9; --accent: #4895ef;
-            --light: #f8f9fa; --dark: #212529; --success: #4bb543;
-            --error: #ff3333; --radius: 8px; --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: #f5f7fa; min-height: 100vh; color: var(--dark); display: flex; justify-content: center; align-items: center; }
-        .auth-section, .gallery-section { width: 100%; max-width: 500px; padding: 1rem; }
-        .auth-container { background: white; border-radius: var(--radius); box-shadow: var(--shadow); }
-        .tabs { display: flex; border-bottom: 1px solid #e0e0e0; }
-        .tab { flex: 1; padding: 1rem; text-align: center; cursor: pointer; font-weight: 600; color: #666; background: #f1f1f1; }
-        .tab.active { background: white; color: var(--primary); border-bottom: 3px solid var(--primary); }
-        .tab-content { padding: 1.5rem; }
-        .tab-pane { display: none; }
-        .tab-pane.active { display: block; }
-        .btn { background: var(--primary); color: white; border: none; padding: 0.8rem; border-radius: var(--radius); font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 1rem; }
-        .btn-guest { background: #6c757d; }
-        .btn-google { background: #4285F4; }
-        .btn-danger { background: var(--error); }
-        .message { padding: 0.8rem 1rem; border-radius: var(--radius); margin-bottom: 1.5rem; font-size: 0.9rem; display: none; }
-        .error { background-color: rgba(255, 51, 51, 0.1); color: var(--error); border: 1px solid rgba(255, 51, 51, 0.3); }
-        .gallery-section { display: none; flex-direction: column; align-items: center; }
-        .gallery-btn, .reader-item, .secret-item { font-size: 17px; font-weight: 500; color: #333; display: flex; align-items: center; padding: 15px; margin: 10px 0; width: 100%; background: white; border: none; border-radius: 12px; cursor: pointer; text-decoration: none; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); }
-        .gallery-btn img, .reader-item img, .secret-item img { width: 40px; height: 40px; margin-right: 15px; border-radius: 8px; object-fit: cover; }
-        .logout-btn { background: var(--error); color: white; padding: 10px 20px; border-radius: 8px; margin-top: 20px; cursor: pointer; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: white; padding: 2rem; border-radius: var(--radius); width: 90%; max-width: 400px; box-shadow: var(--shadow); text-align: center; }
-        .no-click { pointer-events: none; }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+        body{background:#f5f7fa;min-height:100vh;color:#212529;display:flex;justify-content:center;align-items:center}
+        .auth-section,.gallery-section{width:100%;max-width:500px;padding:1rem}
+        .auth-container{background:#fff;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);overflow:hidden}
+        .tabs{display:flex;border-bottom:1px solid #e0e0e0}
+        .tab{flex:1;padding:1rem;text-align:center;cursor:pointer;font-weight:600;color:#666;background:#f1f1f1}
+        .tab.active{background:#fff;color:#4361ee;border-bottom:3px solid #4361ee}
+        .tab-content{padding:1.5rem}
+        .tab-pane{display:none;animation:fadeIn 0.5s ease}
+        .tab-pane.active{display:block}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        .form-group{margin-bottom:1.5rem}
+        .btn{background:#4361ee;color:#fff;border:none;padding:0.8rem;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;transition:all 0.3s ease}
+        .btn:hover{background:#3f37c9;transform:translateY(-2px)}
+        .btn-guest{background:#6c757d;margin-bottom:1rem}
+        .btn-google{background:#4285F4;margin-bottom:1rem}
+        .divider{display:flex;align-items:center;margin:1.5rem 0}
+        .divider span:first-child,.divider span:last-child{flex-grow:1;height:1px;background:#ddd}
+        .divider span:nth-child(2){padding:0 1rem;color:#666}
+        .btn-icon{display:flex;align-items:center;justify-content:center}
+        .btn-icon svg{width:18px;height:18px;margin-right:8px}
+        .gallery-section{display:none;flex-direction:column;align-items:center}
+        .content{text-align:center;width:100%}
+        .gallery-title{width:100%;margin:15px 0 20px}
+        .button-container{width:100%;margin:15px 0}
+        .gallery-btn,.reader-item,.secret-item{font-size:16px;display:flex;align-items:center;padding:12px;margin:8px 0;width:100%;background:#fff;border:none;border-radius:10px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.08);transition:all 0.3s ease}
+        .gallery-btn:hover,.reader-item:hover,.secret-item:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.12)}
+        .gallery-btn img,.reader-item img,.secret-item img{width:36px;height:36px;margin-right:12px;border-radius:6px;object-fit:cover}
+        .gallery-btn span,.reader-item span,.secret-item span{flex-grow:1;text-align:left}
+        .logout-btn{background:#ff3333;color:#fff;padding:8px 16px;border-radius:8px;margin-top:15px;cursor:pointer}
+        .disabled{opacity:0.5;pointer-events:none}
+        .hidden{display:none!important}
+        .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);color:#fff;padding:10px 20px;border-radius:5px;z-index:1000}
     </style>
 </head>
 <body>
     <div class="auth-section" id="auth-section">
         <div class="auth-container">
-            <div class="tabs"><div class="tab active" data-tab="login">로그인</div></div>
+            <div class="tabs"><div class="tab active">로그인</div></div>
             <div class="tab-content">
-                <div id="login" class="tab-pane active">
-                    <div id="login-message" class="message"></div>
-                    <button id="guest-login-btn" class="btn btn-guest">Guest로 로그인</button>
-                    <button id="google-login-btn" class="btn btn-google">Google로 로그인</button>
+                <div class="tab-pane active">
+                    <div class="social-login">
+                        <button id="guest-login-btn" class="btn btn-guest">Guest로 로그인</button>
+                        <div class="divider"><span></span><span>OR</span><span></span></div>
+                        <button id="google-login-btn" class="btn btn-google">
+                            <span class="btn-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="white" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/></svg>
+                                Google로 로그인
+                            </span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -52,22 +64,22 @@
 
     <div class="gallery-section" id="gallery-section">
         <div class="content">
-            <img class="gallery-title no-click" src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/Gallery.png" alt="섹시유수 갤러리" id="gallery-img">
+            <img class="gallery-title" id="gallery-img" src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/Gallery.png" alt="섹시유수 갤러리">
             <div class="button-container">
                 <a href="https://yousoo68.github.io/jh6RTBZ/" class="reader-item">
                     <img src="https://raw.githubusercontent.com/Yousoo68/H2JhFqK/refs/heads/main/ReaderList.png" alt="ReaderList">
                     <span>쁘띠/섹시유수 독자 목록</span>
                 </a>
-                <a class="gallery-btn no-click" id="diary">
-                    <img class="no-click" src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/Insta.jpg" alt="diary" id="insta-img">
+                <a class="gallery-btn" id="diary">
+                    <img id="insta-img" src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/Insta.jpg" alt="diary">
                     <span>섹시유수의 비밀일기</span>
                 </a>
                 <a class="gallery-btn" id="note" href="https://m.youtube.com/playlist?list=PLxefOlZhxI_1s42VUk1SMJpYwJKC4MK68">
                     <img src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/Note.jpg" alt="note">
                     <span>인생노트</span>
                 </a>
-                <a class="gallery-btn no-click" id="ssul">
-                    <img class="no-click" src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/SSUL.jpg" alt="ssul" id="ssul-img">
+                <a class="gallery-btn" id="ssul">
+                    <img id="ssul-img" src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/SSUL.jpg" alt="ssul">
                     <span>섹시유수의 비밀 썰</span>
                 </a>
                 <a class="gallery-btn" id="cuttoon" href="https://yousoo68.github.io/Cuttoon/">
@@ -91,18 +103,11 @@
         <button id="logout-btn" class="logout-btn">로그아웃</button>
     </div>
 
-    <div class="modal" id="secret-modal">
-        <div class="modal-content">
-            <h2>시크릿 모드 활성화됨</h2>
-            <p>이제 특별한 기능을 사용할 수 있습니다!</p>
-        </div>
-    </div>
-
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script>
         // Firebase 구성
-        const firebaseConfig = {
+        firebase.initializeApp({
             apiKey: "AIzaSyClivXSor5P8XJHw1rWYsVfxt8iU6_NgBA",
             authDomain: "login-34bef.firebaseapp.com",
             projectId: "login-34bef",
@@ -110,122 +115,94 @@
             messagingSenderId: "888738257773",
             appId: "1:888738257773:web:b1c5a99b41996c3ac2d864",
             measurementId: "G-MJB1NJH05M"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+        });
 
-        // 시크릿 모드 관련 변수
-        let clickCount = 0;
-        let secretMode = false;
-        let step = 0;
+        // DOM 요소
+        const authSection = document.getElementById('auth-section');
+        const gallerySection = document.getElementById('gallery-section');
+        const logoutBtn = document.getElementById('logout-btn');
+        const guestLoginBtn = document.getElementById('guest-login-btn');
+        const googleLoginBtn = document.getElementById('google-login-btn');
         const galleryImg = document.getElementById('gallery-img');
         const instaImg = document.getElementById('insta-img');
         const ssulImg = document.getElementById('ssul-img');
-        const secretModal = document.getElementById('secret-modal');
+        const diaryBtn = document.getElementById('diary');
+        const ssulBtn = document.getElementById('ssul');
+
+        // 시크릿 모드 관련 변수
+        let secretMode = false;
+        let galleryClickCount = 0;
+        let instaClickCount = 0;
+        let ssulClickCount = 0;
+        let secretSequence = 0;
 
         // 이미지 클릭 핸들러
-        galleryImg.addEventListener('click', () => handleSecretClick('gallery'));
-        instaImg.addEventListener('click', () => handleSecretClick('insta'));
-        ssulImg.addEventListener('click', () => handleSecretClick('ssul'));
-
-        function handleSecretClick(type) {
-            if (!secretMode) {
-                if (type === 'gallery') {
-                    clickCount++;
-                    if (clickCount >= 5) {
-                        secretMode = true;
-                        secretModal.style.display = 'flex';
-                        setTimeout(() => secretModal.style.display = 'none', 2000);
-                        document.querySelectorAll('.no-click').forEach(el => el.classList.remove('no-click'));
-                        clickCount = 0;
-                        step = 1;
-                    }
-                }
+        galleryImg.addEventListener('click', () => {
+            if(!secretMode) {
+                galleryClickCount++;
+                if(galleryClickCount >= 5) activateSecretMode();
             } else {
-                if (step === 1 && type === 'insta') clickCount++;
-                else if (step === 1 && type !== 'insta') clickCount = 0;
-                
-                if (step === 1 && clickCount >= 2) {
-                    step = 2;
-                    clickCount = 0;
-                }
-                
-                if (step === 2 && type === 'ssul') clickCount++;
-                else if (step === 2 && type !== 'ssul') clickCount = 0;
-                
-                if (step === 2 && clickCount >= 2) {
-                    step = 3;
-                    clickCount = 0;
-                }
-                
-                if (step === 3 && type === 'gallery') clickCount++;
-                else if (step === 3 && type !== 'gallery') clickCount = 0;
-                
-                if (step === 3 && clickCount >= 3) {
-                    window.location.href = 'https://yousoo68.github.io/Fhwidna/';
+                if(secretSequence === 4) {
+                    galleryClickCount++;
+                    if(galleryClickCount >= 3) window.location.href = 'https://yousoo68.github.io/Fhwidna/';
                 }
             }
-        }
-
-        // 인증 관련 코드
-        const FULL_ACCESS_ACCOUNTS = ['sexyyousoo68@gmail.com', 'seojunna73@gmail.com', /*...*/];
-        const LIMITED_ACCESS_ACCOUNTS = ['Example@gmail.com'];
-        const REDIRECT_ACCOUNT = 'seyun07070782@gmail.com';
-        const REDIRECT_URL = 'https://www.instagram.com/homaesil_official_?igsh=MTR4bTE3c2w1bGZpYg==';
-
-        document.getElementById('guest-login-btn').addEventListener('click', () => {
-            updateUI({ email: 'guest@example.com', isGuest: true }, true, false);
         });
 
-        document.getElementById('google-login-btn').addEventListener('click', () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider).then((result) => {
-                const user = result.user;
-                if (user.email === REDIRECT_ACCOUNT) window.location.href = REDIRECT_URL;
-                else updateUI(user, false, !FULL_ACCESS_ACCOUNTS.includes(user.email) && !LIMITED_ACCESS_ACCOUNTS.includes(user.email));
-            }).catch(handleAuthError);
-        });
-
-        document.getElementById('logout-btn').addEventListener('click', () => {
-            auth.signOut().then(() => updateUI(null, false, false));
-        });
-
-        function updateUI(user, isGuest, isRegularGoogleAccount) {
-            const authSection = document.getElementById('auth-section');
-            const gallerySection = document.getElementById('gallery-section');
-            
-            if (user) {
-                authSection.style.display = 'none';
-                gallerySection.style.display = 'flex';
-                
-                const diaryBtn = document.getElementById('diary');
-                const ssulBtn = document.getElementById('ssul');
-                
-                if (isGuest || isRegularGoogleAccount) {
-                    diaryBtn.classList.add('no-click');
-                    ssulBtn.classList.add('no-click');
-                    document.getElementById('diy').style.display = 'none';
-                } else if (LIMITED_ACCESS_ACCOUNTS.includes(user.email)) {
-                    document.getElementById('secret-btn').classList.add('no-click');
-                }
-            } else {
-                authSection.style.display = 'block';
-                gallerySection.style.display = 'none';
+        instaImg.addEventListener('click', () => {
+            if(secretMode && secretSequence === 0) {
+                instaClickCount++;
+                if(instaClickCount >= 2) secretSequence = 1;
             }
-        }
+        });
 
-        function handleAuthError(error) {
-            const element = document.getElementById('login-message');
-            element.textContent = error.message;
-            element.className = 'message error';
-            element.style.display = 'block';
-            setTimeout(() => element.style.display = 'none', 5000);
-        }
-
-        auth.onAuthStateChanged((user) => {
-            if (user && user.email !== REDIRECT_ACCOUNT) {
-                updateUI(user, false, !FULL_ACCESS_ACCOUNTS.includes(user.email) && !LIMITED_ACCESS_ACCOUNTS.includes(user.email));
+        ssulImg.addEventListener('click', () => {
+            if(secretMode && secretSequence === 1) {
+                ssulClickCount++;
+                if(ssulClickCount >= 2) secretSequence = 2;
             }
+        });
+
+        function activateSecretMode() {
+            secretMode = true;
+            showToast('시크릿 모드가 활성화되었습니다');
+            diaryBtn.href = 'https://www.instagram.com/sexyyousoo/?__pwa=1';
+            ssulBtn.href = 'https://yousoo68.github.io/SSUL/';
+            diaryBtn.classList.remove('disabled');
+            ssulBtn.classList.remove('disabled');
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // 로그인/로그아웃 핸들러
+        guestLoginBtn.addEventListener('click', () => updateUI(true));
+        googleLoginBtn.addEventListener('click', () => firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
+            .catch(error => console.error('로그인 오류:', error)));
+        logoutBtn.addEventListener('click', () => firebase.auth().signOut().then(() => updateUI(false)));
+
+        // UI 업데이트 함수
+        function updateUI(loggedIn) {
+            authSection.style.display = loggedIn ? 'none' : 'block';
+            gallerySection.style.display = loggedIn ? 'flex' : 'none';
+            if(!loggedIn) resetSecretMode();
+        }
+
+        function resetSecretMode() {
+            secretMode = false;
+            galleryClickCount = instaClickCount = ssulClickCount = secretSequence = 0;
+            diaryBtn.classList.add('disabled');
+            ssulBtn.classList.add('disabled');
+        }
+
+        // 인증 상태 리스너
+        firebase.auth().onAuthStateChanged(user => {
+            if(user) updateUI(true);
         });
     </script>
 </body>
