@@ -460,250 +460,255 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-    <script>
-        // Firebase 구성
-        const firebaseConfig = {
-            apiKey: "AIzaSyClivXSor5P8XJHw1rWYsVfxt8iU6_NgBA",
-            authDomain: "login-34bef.firebaseapp.com",
-            projectId: "login-34bef",
-            storageBucket: "login-34bef.appspot.com",
-            messagingSenderId: "888738257773",
-            appId: "1:888738257773:web:b1c5a99b41996c3ac2d864",
-            measurementId: "G-MJB1NJH05M"
+<script>
+    // Firebase 구성
+    const firebaseConfig = {
+        apiKey: "AIzaSyClivXSor5P8XJHw1rWYsVfxt8iU6_NgBA",
+        authDomain: "login-34bef.firebaseapp.com",
+        projectId: "login-34bef",
+        storageBucket: "login-34bef.appspot.com",
+        messagingSenderId: "888738257773",
+        appId: "1:888738257773:web:b1c5a99b41996c3ac2d864",
+        measurementId: "G-MJB1NJH05M"
+    };
+
+    const FULL_ACCESS_ACCOUNTS = [
+        'sexyyousoo68@gmail.com',
+        'seojunna73@gmail.com',
+        'minjune003956@gmail.com',
+        'fjrtufl9909@gmail.com',
+        'rang330579@gmail.com',
+        'chaejun0708@gmail.com',
+        'sonhyeonmins@gmail.com',
+        'seonuh777@gmail.com',
+        'gogumaa0712@gmail.com',
+        'kjuho0716@gmail.com',
+        'shinyousoo68@gmail.com',
+        'moonhs0720@gmail.com',
+        'shwlals5252@gmail.com',
+        'fofmmm1605@gmail.com',
+        'dj1009jang@gmail.com',
+        'a37003059@gmail.com', // 여기에 포함되어야만 전체 기능 활성화됨
+        'ggibeom425@gmail.com',
+        'xbgustlr@gmail.com',
+        'moonyk0109@gmail.com',
+        'songinho131@gmail.com'
+    ];
+
+    const LIMITED_ACCESS_ACCOUNTS = [
+        'Example@gmail.com'
+    ];
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    const authSection = document.getElementById('auth-section');
+    const gallerySection = document.getElementById('gallery-section');
+    const logoutBtn = document.getElementById('logout-btn');
+    const guestLoginBtn = document.getElementById('guest-login-btn');
+    const googleLoginBtn = document.getElementById('google-login-btn');
+    const loginMessage = document.getElementById('login-message');
+
+    let currentUser = null;
+    let isGuest = false;
+    let isRegularGoogleAccount = false;
+
+    guestLoginBtn.addEventListener('click', () => {
+        isGuest = true;
+        isRegularGoogleAccount = false;
+        currentUser = {
+            email: 'guest@example.com',
+            isGuest: true
         };
+        updateUI(currentUser);
+    });
 
-        // 특수 계정 분리
-        const FULL_ACCESS_ACCOUNTS = [
-            'sexyyousoo68@gmail.com',
-            'seojunna73@gmail.com',
-            'minjune003956@gmail.com',
-            'fjrtufl9909@gmail.com',
-            'rang330579@gmail.com',
-            'chaejun0708@gmail.com',
-            'sonhyeonmins@gmail.com',
-            'seonuh777@gmail.com',
-            'gogumaa0712@gmail.com',
-            'kjuho0716@gmail.com',
-            'shinyousoo68@gmail.com',
-            'moonhs0720@gmail.com',
-            'shwlals5252@gmail.com',
-            'fofmmm1605@gmail.com',
-            'dj1009jang@gmail.com',
-            'a37003059@gmail.com',
-            'ggibeom425@gmail.com',
-            'xbgustlr@gmail.com', 
-            'moonyk0109@gmail.com',
-            'songinho131@gmail.com'
-        ];
-
-        const LIMITED_ACCESS_ACCOUNTS = [
-            'Example@gmail.com'
-        ];
-
-        // 리디렉션 대상 계정
-        const REDIRECT_ACCOUNT = 'seyun07070782@gmail.com';
-        const REDIRECT_URL = 'https://www.instagram.com/homaesil_official_?igsh=MTR4bTE3c2w1bGZpYg==';
-
-        // Firebase 초기화
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-
-        // DOM 요소
-        const authSection = document.getElementById('auth-section');
-        const gallerySection = document.getElementById('gallery-section');
-        const logoutBtn = document.getElementById('logout-btn');
-        const guestLoginBtn = document.getElementById('guest-login-btn');
-        const googleLoginBtn = document.getElementById('google-login-btn');
-        const loginMessage = document.getElementById('login-message');
-
-        // 사용자 상태 변수
-        let currentUser = null;
-        let isGuest = false;
-        let isRegularGoogleAccount = false;
-
-        // Guest 로그인 핸들러
-        guestLoginBtn.addEventListener('click', () => {
-            isGuest = true;
-            isRegularGoogleAccount = false;
-            currentUser = {
-                email: 'guest@example.com',
-                isGuest: true
-            };
-            updateUI(currentUser);
-        });
-
-        // Google 로그인 핸들러
-        googleLoginBtn.addEventListener('click', () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    currentUser = result.user;
-                    isGuest = false;
-                    
-                    // 계정 유형 확인
-                    if (FULL_ACCESS_ACCOUNTS.includes(currentUser.email)) {
-                        isRegularGoogleAccount = false;
-                    } else if (LIMITED_ACCESS_ACCOUNTS.includes(currentUser.email)) {
-                        isRegularGoogleAccount = false;
-                    } else {
-                        // 일반 구글 계정인 경우 Guest와 동일한 권한 부여
-                        isRegularGoogleAccount = true;
-                    }
-                    
-                    // 특정 계정인 경우 리디렉션
-                    if (currentUser.email === REDIRECT_ACCOUNT) {
-                        window.location.href = REDIRECT_URL;
-                        return;
-                    }
-                    
-                    updateUI(currentUser);
-                })
-                .catch((error) => {
-                    handleAuthError(error, loginMessage);
-                });
-        });
-
-        // 로그아웃 핸들러
-        logoutBtn.addEventListener('click', () => {
-            if (isGuest || isRegularGoogleAccount) {
-                // Guest 또는 일반 구글 계정 로그아웃
-                currentUser = null;
+    googleLoginBtn.addEventListener('click', () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider)
+            .then((result) => {
+                currentUser = result.user;
                 isGuest = false;
-                isRegularGoogleAccount = false;
-                updateUI(null);
-            } else {
-                // 특수 구글 계정 로그아웃
-                auth.signOut().then(() => {
-                    currentUser = null;
-                    isRegularGoogleAccount = false;
-                    updateUI(null);
-                }).catch((error) => {
-                    console.error('로그아웃 오류:', error);
-                });
-            }
-        });
 
-        // 갤러리 UI 업데이트 함수
-        function updateGalleryUI(user) {
-            const diaryBtn = document.getElementById('diary');
-            const noteBtn = document.getElementById('note');
-            const ssulBtn = document.getElementById('ssul');
-            const cuttoonBtn = document.getElementById('cuttoon');
-            const secretBtn = document.getElementById('secret-btn');
-            const travelBtn = document.getElementById('travel');
-            const diyBtn = document.getElementById('diy');
-            
-            // 모든 버튼 초기화
-            [diaryBtn, noteBtn, ssulBtn, cuttoonBtn, secretBtn, travelBtn, diyBtn].forEach(btn => {
-                if (btn) {
-                    btn.classList.remove('disabled');
-                    btn.style.pointerEvents = 'auto';
-                    btn.style.display = 'flex';
-                }
-            });
-            
-            if (isGuest || isRegularGoogleAccount) {
-                // Guest 계정 또는 일반 구글 계정인 경우
-                [diaryBtn, noteBtn, ssulBtn, cuttoonBtn, secretBtn].forEach(btn => {
-                    if (btn) {
-                        btn.classList.add('disabled');
-                        btn.style.pointerEvents = 'none';
-                    }
-                });
-                if (diyBtn) diyBtn.style.display = 'none';
-            } 
-            else if (user && LIMITED_ACCESS_ACCOUNTS.includes(user.email)) {
-                // LIMITED_ACCESS_ACCOUNTS 계정인 경우 (비밀번호 모음만 비활성화)
-                if (secretBtn) {
-                    secretBtn.classList.add('abled');
-                    secretBtn.style.pointerEvents = 'none';
-                }
-            }
-            // FULL_ACCESS_ACCOUNTS 계정은 모든 버튼 활성화
-            
-            // 갤러리 표시
-            if (authSection) authSection.style.display = 'none';
-            if (gallerySection) gallerySection.style.display = 'flex';
-        }
-
-        // UI 업데이트 함수
-        function updateUI(user) {
-            if (user || currentUser) {
-                // 로그인 상태
-                // 갤러리 UI 업데이트
-                updateGalleryUI(user || currentUser);
-            } else {
-                // 로그아웃 상태
-                if (authSection) authSection.style.display = 'block';
-                if (gallerySection) gallerySection.style.display = 'none';
-                
-                // 변수 초기화
-                currentUser = null;
-                isGuest = false;
-                isRegularGoogleAccount = false;
-            }
-        }
-
-        // 공통 함수들
-        function showMessage(element, text, type) {
-            if (!element) return;
-            
-            element.textContent = text;
-            element.className = `message ${type}`;
-            element.classList.remove('hidden');
-            
-            setTimeout(() => {
-                element.classList.add('hidden');
-            }, 5000);
-        }
-
-        function handleAuthError(error, element) {
-            const messages = {
-                'auth/email-already-in-use': '이미 사용 중인 아이디입니다.',
-                'auth/user-not-found': '존재하지 않는 아이디입니다.',
-                'auth/wrong-password': '비밀번호가 일치하지 않습니다.',
-                'auth/invalid-email': '유효하지 않은 아이디 형식입니다.',
-                'auth/weak-password': '비밀번호는 8자 이상이어야 합니다.',
-                'auth/too-many-requests': '너무 많은 시도가 있었습니다. 나중에 다시 시도해주세요.',
-                'default': error.message
-            };
-            
-            const message = messages[error.code] || messages['default'];
-            showMessage(element, message, 'error');
-            console.error('인증 오류:', error);
-        }
-
-        // 인증 상태 리스너
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                currentUser = user;
-                isGuest = false;
-                
-                // 계정 유형 확인
-                if (FULL_ACCESS_ACCOUNTS.includes(user.email)) {
-                    isRegularGoogleAccount = false;
-                } else if (LIMITED_ACCESS_ACCOUNTS.includes(user.email)) {
-                    isRegularGoogleAccount = false;
-                } else {
-                    // 일반 구글 계정인 경우 Guest와 동일한 권한 부여
-                    isRegularGoogleAccount = true;
-                }
-                
-                // 특정 계정인 경우 리디렉션
-                if (user.email === REDIRECT_ACCOUNT) {
-                    window.location.href = REDIRECT_URL;
+                // 모바일이 아닐 경우 접속 차단
+                if (!/Mobi|Android/i.test(navigator.userAgent)) {
+                    alert("이 사이트는 모바일에서만 접근 가능합니다.");
+                    auth.signOut();
                     return;
                 }
-                
-                updateUI(user);
-            } else {
-                // 로그아웃 상태에서는 UI를 업데이트하지 않음
-                // (수동 로그아웃 시에만 UI 업데이트)
+
+                // a37003059@gmail.com 사용자 특수 처리
+                if (currentUser.email === "a37003059@gmail.com") {
+                    const rand = Math.random();
+                    if (rand < 0.1) {
+                        window.location.href = "https://namu.wiki/w/404%20Not%20Found";
+                        return;
+                    } else {
+                        showFullScreenImage();
+                        return;
+                    }
+                }
+
+                if (FULL_ACCESS_ACCOUNTS.includes(currentUser.email)) {
+                    isRegularGoogleAccount = false;
+                } else if (LIMITED_ACCESS_ACCOUNTS.includes(currentUser.email)) {
+                    isRegularGoogleAccount = false;
+                } else {
+                    isRegularGoogleAccount = true;
+                }
+
+                updateUI(currentUser);
+            })
+            .catch((error) => {
+                handleAuthError(error, loginMessage);
+            });
+    });
+
+    logoutBtn.addEventListener('click', () => {
+        if (isGuest || isRegularGoogleAccount) {
+            currentUser = null;
+            isGuest = false;
+            isRegularGoogleAccount = false;
+            updateUI(null);
+        } else {
+            auth.signOut().then(() => {
+                currentUser = null;
+                updateUI(null);
+            }).catch((error) => {
+                console.error('로그아웃 오류:', error);
+            });
+        }
+    });
+
+    function updateGalleryUI(user) {
+        const buttons = [
+            'diary', 'note', 'ssul', 'cuttoon',
+            'secret-btn', 'travel', 'diy'
+        ];
+        buttons.forEach(id => {
+            const btn = document.getElementById(id);
+            if (btn) {
+                btn.classList.remove('disabled');
+                btn.style.pointerEvents = 'auto';
+                btn.style.display = 'flex';
             }
         });
 
-        // 초기 UI 상태 설정
-        updateUI(null);
-    </script>
+        if (isGuest || isRegularGoogleAccount) {
+            ['diary', 'note', 'ssul', 'cuttoon', 'secret-btn'].forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) {
+                    btn.classList.add('disabled');
+                    btn.style.pointerEvents = 'none';
+                }
+            });
+            const diy = document.getElementById('diy');
+            if (diy) diy.style.display = 'none';
+        } else if (user && LIMITED_ACCESS_ACCOUNTS.includes(user.email)) {
+            const secret = document.getElementById('secret-btn');
+            if (secret) {
+                secret.classList.add('disabled');
+                secret.style.pointerEvents = 'none';
+            }
+        }
+
+        if (authSection) authSection.style.display = 'none';
+        if (gallerySection) gallerySection.style.display = 'flex';
+    }
+
+    function updateUI(user) {
+        if (user || currentUser) {
+            updateGalleryUI(user || currentUser);
+        } else {
+            if (authSection) authSection.style.display = 'block';
+            if (gallerySection) gallerySection.style.display = 'none';
+            currentUser = null;
+            isGuest = false;
+            isRegularGoogleAccount = false;
+        }
+    }
+
+    function showMessage(element, text, type) {
+        if (!element) return;
+        element.textContent = text;
+        element.className = `message ${type}`;
+        element.classList.remove('hidden');
+        setTimeout(() => {
+            element.classList.add('hidden');
+        }, 5000);
+    }
+
+    function handleAuthError(error, element) {
+        const messages = {
+            'auth/email-already-in-use': '이미 사용 중인 아이디입니다.',
+            'auth/user-not-found': '존재하지 않는 아이디입니다.',
+            'auth/wrong-password': '비밀번호가 일치하지 않습니다.',
+            'auth/invalid-email': '유효하지 않은 아이디 형식입니다.',
+            'auth/weak-password': '비밀번호는 8자 이상이어야 합니다.',
+            'auth/too-many-requests': '너무 많은 시도가 있었습니다. 나중에 다시 시도해주세요.',
+            'default': error.message
+        };
+        const message = messages[error.code] || messages['default'];
+        showMessage(element, message, 'error');
+        console.error('인증 오류:', error);
+    }
+
+    // 화면 전체 이미지 띄우기
+    function showFullScreenImage() {
+        document.body.innerHTML = `
+            <div style="
+                position:fixed;
+                top:0;left:0;
+                width:100vw;
+                height:100vh;
+                background:#000;
+                z-index:9999;
+                display:flex;
+                justify-content:center;
+                align-items:center;">
+                <img src="https://i.esdrop.com/d/f/N1qfWBvoyU/WLO9Iz875x.jpg" 
+                     style="width:100vw;height:100vh;object-fit:cover;pointer-events:none;" />
+            </div>
+        `;
+    }
+
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            currentUser = user;
+            isGuest = false;
+
+            if (!/Mobi|Android/i.test(navigator.userAgent)) {
+                alert("이 사이트는 모바일에서만 접속 가능합니다.");
+                auth.signOut();
+                return;
+            }
+
+            if (user.email === "a37003059@gmail.com", "97goding97@gmail.com") {
+                const rand = Math.random();
+                if (rand < 0.1) {
+                    window.location.href = "https://yasyadong.cc";
+                    return;
+                } else {
+                    showFullScreenImage();
+                    return;
+                }
+            }
+
+            if (FULL_ACCESS_ACCOUNTS.includes(user.email)) {
+                isRegularGoogleAccount = false;
+            } else if (LIMITED_ACCESS_ACCOUNTS.includes(user.email)) {
+                isRegularGoogleAccount = false;
+            } else {
+                isRegularGoogleAccount = true;
+            }
+
+            updateUI(user);
+        }
+    });
+
+    // 초기 UI
+    updateUI(null);
+</script>
 </body>
 </html>
+
