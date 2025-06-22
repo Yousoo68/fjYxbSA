@@ -368,9 +368,89 @@
         }
 
         @media (max-width: 768px) {
-            .auth-section, .gallery-section { padding: 1rem; }
-            .tab-content { padding: 1.5rem; }
-        }
+    :root {
+        --radius: 6px;
+        --shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    body {
+        padding: 1rem;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .auth-section, .gallery-section {
+        padding: 1rem;
+        max-width: 100%;
+    }
+
+    .auth-container, .modal-content {
+        padding: 1.2rem;
+    }
+
+    .tab {
+        padding: 0.75rem;
+        font-size: 0.95rem;
+    }
+
+    .tab-content {
+        padding: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-control {
+        padding: 0.7rem 0.9rem;
+        font-size: 0.95rem;
+    }
+
+    .btn {
+        padding: 0.9rem;
+        font-size: 1rem;
+    }
+
+    .message {
+        font-size: 0.85rem;
+        padding: 0.7rem 1rem;
+    }
+
+    .gallery-btn, .reader-item, .secret-item {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+
+    .gallery-btn img, .reader-item img, .secret-item img {
+        width: 36px;
+        height: 36px;
+        margin-right: 12px;
+    }
+
+    .gallery-title {
+        font-size: 1.25rem;
+        margin: 15px 0 20px;
+    }
+
+    .modal-content {
+        padding: 1.5rem;
+    }
+
+    .modal-title {
+        font-size: 1.1rem;
+    }
+
+    .logout-btn {
+        font-size: 0.95rem;
+        padding: 0.7rem 1.2rem;
+    }
+
+    .btn-icon svg {
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+    }
+}
     </style>
 </head>
 <body>
