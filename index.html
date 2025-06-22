@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>섹시유수 갤러리</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>섹시유수 갤러리</title>
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/Yousoo68/photo/refs/heads/main/GallerySquare.jpg">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://raw.githubusercontent.com/Yousoo68/photo/refs/heads/main/GallerySquare.jpg">
-    <link rel="icon" type="image/png" sizes="512x512" href="https://raw.githubusercontent.com/Yousoo68/photo/refs/heads/main/GallerySquare.jpg">
-    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/Yousoo68/photo/refs/heads/main/GallerySquare.jpg">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://raw.githubusercontent.com/Yousoo68/photo/refs/heads/main/GallerySquare.jpg">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://raw.githubusercontent.com/Yousoo68/photo/refs/heads/main/GallerySquare.jpg">
+    <link rel="manifest" href="manifest.json">
 
-    <style>
+    <style>
         :root {
             --primary: #4361ee;
             --secondary: #3f37c9;
@@ -23,13 +23,15 @@
             --radius: 8px;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
+            --mobile-padding: 16px;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
@@ -40,13 +42,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: var(--mobile-padding);
+            -webkit-text-size-adjust: 100%;
         }
 
         /* 인증 시스템 스타일 */
         .auth-section {
             width: 100%;
             max-width: 500px;
-            padding: 2rem;
+            padding: 0;
         }
         
         .auth-container {
@@ -54,6 +58,7 @@
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             overflow: hidden;
+            width: 100%;
         }
         
         .tabs {
@@ -63,13 +68,14 @@
         
         .tab {
             flex: 1;
-            padding: 1rem;
+            padding: 14px 10px;
             text-align: center;
             cursor: pointer;
             transition: var(--transition);
             font-weight: 600;
             color: #666;
             background: #f1f1f1;
+            font-size: 15px;
         }
         
         .tab.active {
@@ -79,7 +85,7 @@
         }
         
         .tab-content {
-            padding: 2rem;
+            padding: 20px;
         }
         
         .tab-pane {
@@ -95,22 +101,24 @@
         }
         
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 18px;
         }
         
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
             font-weight: 500;
+            font-size: 15px;
         }
         
         .form-control {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 14px 16px;
             border: 1px solid #ddd;
             border-radius: var(--radius);
-            font-size: 1rem;
+            font-size: 16px;
             transition: var(--transition);
+            -webkit-appearance: none;
         }
         
         .form-control:focus {
@@ -123,13 +131,14 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.8rem;
+            padding: 14px;
             border-radius: var(--radius);
-            font-size: 1rem;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             width: 100%;
+            display: block;
         }
         
         .btn:hover {
@@ -139,7 +148,7 @@
         
         .btn-guest {
             background: #6c757d;
-            margin-bottom: 1rem;
+            margin-bottom: 16px;
         }
         
         .btn-guest:hover {
@@ -148,7 +157,7 @@
         
         .btn-google {
             background: #4285F4;
-            margin-bottom: 1rem;
+            margin-bottom: 16px;
         }
         
         .btn-danger {
@@ -160,10 +169,11 @@
         }
         
         .message {
-            padding: 0.8rem 1rem;
+            padding: 14px 16px;
             border-radius: var(--radius);
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
+            margin-bottom: 18px;
+            font-size: 15px;
+            line-height: 1.5;
         }
         
         .success { background-color: rgba(75, 181, 67, 0.1); color: var(--success); border: 1px solid rgba(75, 181, 67, 0.3); }
@@ -172,24 +182,25 @@
         
         .current-user-info {
             background: #f8f9fa;
-            padding: 1rem;
+            padding: 16px;
             border-radius: var(--radius);
-            margin-bottom: 1.5rem;
+            margin-bottom: 18px;
             text-align: center;
+            font-size: 15px;
         }
         
         .current-user-info p {
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
         }
 
         .social-login {
-            margin-top: 1.5rem;
+            margin-top: 18px;
         }
         
         .divider {
             display: flex;
             align-items: center;
-            margin: 1.5rem 0;
+            margin: 18px 0;
         }
         
         .divider span:first-child,
@@ -200,8 +211,9 @@
         }
         
         .divider span:nth-child(2) {
-            padding: 0 1rem;
+            padding: 0 12px;
             color: #666;
+            font-size: 14px;
         }
         
         .btn-icon {
@@ -216,41 +228,12 @@
             margin-right: 8px;
         }
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal-content {
-            background: white;
-            padding: 2rem;
-            border-radius: var(--radius);
-            width: 90%;
-            max-width: 400px;
-            box-shadow: var(--shadow);
-        }
-        
-        .modal-title {
-            margin-bottom: 1.5rem;
-            font-size: 1.25rem;
-            font-weight: 600;
-            text-align: center;
-        }
-
         /* 갤러리 스타일 */
         .gallery-section {
             display: none;
             width: 100%;
             max-width: 600px;
-            padding: 2rem;
+            padding: 0;
             flex-direction: column;
             align-items: center;
         }
@@ -258,11 +241,13 @@
         .content {
             text-align: center;
             width: 100%;
+            padding: 0 var(--mobile-padding);
         }
 
         .gallery-title {
             width: 100%;
-            margin: 20px 0 30px;
+            max-width: 350px;
+            margin: 20px auto 25px;
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
         }
 
@@ -272,13 +257,13 @@
         }
 
         /* 공통 버튼 스타일 */
-        .gallery-btn, .reader-item {
-            font-size: 17px;
+        .gallery-btn, .reader-item, .secret-item {
+            font-size: 16px;
             font-weight: 500;
             color: #333;
             display: flex;
             align-items: center;
-            padding: 15px;
+            padding: 14px;
             margin: 10px 0;
             width: 100%;
             background: white;
@@ -290,71 +275,39 @@
             transition: all 0.3s ease;
         }
 
-        .gallery-btn:hover, .reader-item:hover {
+        .gallery-btn:hover, .reader-item:hover, .secret-item:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         }
 
-        .gallery-btn img, .reader-item img {
+        .gallery-btn img, .reader-item img, .secret-item img {
             width: 40px;
             height: 40px;
-            margin-right: 15px;
+            margin-right: 12px;
             border-radius: 8px;
             object-fit: cover;
             filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
         }
 
-        .gallery-btn span, .reader-item span {
+        .gallery-btn span, .reader-item span, .secret-item span {
             flex-grow: 1;
             text-align: left;
-        }
-
-        /* 비밀 썰 비밀번호 모음 스타일 */
-        .secret-item {
-            font-size: 17px;
-            font-weight: 500;
-            color: #333;
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            margin: 10px 0;
-            width: 100%;
-            background: white;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            text-decoration: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-        }
-
-        .secret-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-        }
-
-        .secret-item img {
-            width: 40px;
-            height: 40px;
-            margin-right: 15px;
-            border-radius: 8px;
-            object-fit: cover;
-            filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
-        }
-
-        .secret-item span {
-            flex-grow: 1;
-            text-align: left;
+            word-break: keep-all;
         }
 
         .logout-btn {
             background: var(--error);
             color: white;
-            padding: 10px 20px;
+            padding: 14px 20px;
             border-radius: 8px;
-            margin-top: 20px;
+            margin: 20px 0;
             cursor: pointer;
             transition: var(--transition);
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            width: calc(100% - (var(--mobile-padding) * 2));
+            max-width: 500px;
         }
 
         .logout-btn:hover {
@@ -366,40 +319,83 @@
             pointer-events: none;
         }
 
-        @media (max-width: 768px) {
-            .auth-section, .gallery-section { padding: 1rem; }
-            .tab-content { padding: 1.5rem; }
+        /* 모바일 최적화 추가 스타일 */
+        @media (max-width: 480px) {
+            :root {
+                --radius: 6px;
+                --mobile-padding: 12px;
+            }
+            
+            .tab {
+                padding: 12px 8px;
+                font-size: 14px;
+            }
+            
+            .tab-content {
+                padding: 16px;
+            }
+            
+            .gallery-btn, .reader-item, .secret-item {
+                font-size: 15px;
+                padding: 12px;
+            }
+            
+            .gallery-btn img, .reader-item img, .secret-item img {
+                width: 36px;
+                height: 36px;
+                margin-right: 10px;
+            }
+            
+            .gallery-title {
+                margin: 15px auto 20px;
+            }
+            
+            .btn {
+                padding: 13px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 350px) {
+            .gallery-btn span, .reader-item span, .secret-item span {
+                font-size: 14px;
+            }
+            
+            .gallery-btn img, .reader-item img, .secret-item img {
+                width: 32px;
+                height: 32px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- 인증 섹션 -->
-    <div class="auth-section" id="auth-section">
-        <div class="auth-container">
-            <div class="tabs">
-                <div class="tab active" data-tab="login">로그인</div>
-            </div>
-            <div class="tab-content">
-                <div id="login" class="tab-pane active">
-                    <div id="login-message" class="message hidden"></div>
-                    <div class="social-login">
-                        <button id="guest-login-btn" class="btn btn-guest">Guest로 로그인</button>
-                        <div class="divider"><span></span><span>OR</span><span></span></div>
-                        <button id="google-login-btn" class="btn btn-google">
-                            <span class="btn-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
-                                    <path fill="white" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/>
-                                </svg>
-                                Google로 로그인
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- 인증 섹션 -->
+    <div class="auth-section" id="auth-section">
+        <div class="auth-container">
+            <div class="tabs">
+                <div class="tab active" data-tab="login">로그인</div>
+            </div>
+            <div class="tab-content">
+                <div id="login" class="tab-pane active">
+                    <div id="login-message" class="message hidden"></div>
+                    <div class="social-login">
+                        <button id="guest-login-btn" class="btn btn-guest">Guest로 로그인</button>
+                        <div class="divider"><span></span><span>OR</span><span></span></div>
+                        <button id="google-login-btn" class="btn btn-google">
+                            <span class="btn-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
+                                    <path fill="white" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/>
+                                </svg>
+                                Google로 로그인
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- 갤러리 섹션 (로그인 후 표시) -->
+    <!-- 갤러리 섹션 (로그인 후 표시) -->
     <div class="gallery-section" id="gallery-section">
         <div class="content">
             <img class="gallery-title" src="https://raw.githubusercontent.com/Yousoo68/fjYxbSA/refs/heads/main/Gallery.png" alt="섹시유수 갤러리">
@@ -441,183 +437,183 @@
                     <span>DIY오나홀</span>
                 </a>
             </div>
-        </div>
-        <button id="logout-btn" class="logout-btn">로그아웃</button>
-    </div>
+        </div>
+        <button id="logout-btn" class="logout-btn">로그아웃</button>
+    </div>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-    <script>
-    const firebaseConfig = {
-        apiKey: "AIzaSyClivXSor5P8XJHw1rWYsVfxt8iU6_NgBA",
-        authDomain: "login-34bef.firebaseapp.com",
-        projectId: "login-34bef",
-        storageBucket: "login-34bef.appspot.com",
-        messagingSenderId: "888738257773",
-        appId: "1:888738257773:web:b1c5a99b41996c3ac2d864",
-        measurementId: "G-MJB1NJH05M"
-    };
+    <script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyClivXSor5P8XJHw1rWYsVfxt8iU6_NgBA",
+        authDomain: "login-34bef.firebaseapp.com",
+        projectId: "login-34bef",
+        storageBucket: "login-34bef.appspot.com",
+        messagingSenderId: "888738257773",
+        appId: "1:888738257773:web:b1c5a99b41996c3ac2d864",
+        measurementId: "G-MJB1NJH05M"
+    };
 
-    const FULL_ACCESS_ACCOUNTS = [
-        'sexyyousoo68@gmail.com',
-        'seojunna73@gmail.com',
-        'minjune003956@gmail.com',
-        'fjrtufl9909@gmail.com',
-        'rang330579@gmail.com',
-        'chaejun0708@gmail.com',
-        'sonhyeonmins@gmail.com',
-        'seonuh777@gmail.com',
-        'gogumaa0712@gmail.com',
-        'kjuho0716@gmail.com',
-        'shinyousoo68@gmail.com',
-        'moonhs0720@gmail.com',
-        'shwlals5252@gmail.com',
-        'fofmmm1605@gmail.com',
-        'dj1009jang@gmail.com',
-        'a37003059@gmail.com',
-        'ggibeom425@gmail.com',
-        'xbgustlr@gmail.com',
-        'moonyk0109@gmail.com',
-        'songinho131@gmail.com'
-    ];
+    const FULL_ACCESS_ACCOUNTS = [
+        'sexyyousoo68@gmail.com',
+        'seojunna73@gmail.com',
+        'minjune003956@gmail.com',
+        'fjrtufl9909@gmail.com',
+        'rang330579@gmail.com',
+        'chaejun0708@gmail.com',
+        'sonhyeonmins@gmail.com',
+        'seonuh777@gmail.com',
+        'gogumaa0712@gmail.com',
+        'kjuho0716@gmail.com',
+        'shinyousoo68@gmail.com',
+        'moonhs0720@gmail.com',
+        'shwlals5252@gmail.com',
+        'fofmmm1605@gmail.com',
+        'dj1009jang@gmail.com',
+        'a37003059@gmail.com',
+        'ggibeom425@gmail.com',
+        'xbgustlr@gmail.com',
+        'moonyk0109@gmail.com',
+        'songinho131@gmail.com'
+    ];
 
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-    const authSection = document.getElementById('auth-section');
-    const gallerySection = document.getElementById('gallery-section');
-    const logoutBtn = document.getElementById('logout-btn');
-    const guestLoginBtn = document.getElementById('guest-login-btn');
-    const googleLoginBtn = document.getElementById('google-login-btn');
+    const authSection = document.getElementById('auth-section');
+    const gallerySection = document.getElementById('gallery-section');
+    const logoutBtn = document.getElementById('logout-btn');
+    const guestLoginBtn = document.getElementById('guest-login-btn');
+    const googleLoginBtn = document.getElementById('google-login-btn');
 
-    let currentUser = null;
-    let isGuest = false;
-    let isRegularGoogleAccount = false;
+    let currentUser = null;
+    let isGuest = false;
+    let isRegularGoogleAccount = false;
 
-    guestLoginBtn.addEventListener('click', () => {
-        isGuest = true;
-        isRegularGoogleAccount = false;
-        currentUser = { email: 'guest@example.com', isGuest: true };
-        updateUI(currentUser);
-    });
+    guestLoginBtn.addEventListener('click', () => {
+        isGuest = true;
+        isRegularGoogleAccount = false;
+        currentUser = { email: 'guest@example.com', isGuest: true };
+        updateUI(currentUser);
+    });
 
-    googleLoginBtn.addEventListener('click', () => {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider).then((result) => {
-            currentUser = result.user;
-            isGuest = false;
+    googleLoginBtn.addEventListener('click', () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider).then((result) => {
+            currentUser = result.user;
+            isGuest = false;
 
-            if (currentUser.email === 'a37003059@gmail.com') {
-                const rand = Math.random();
-                if (rand < 0.2) {
-                    window.location.href = 'https://yasyadong.cc';
-                    return;
-                } else {
-                    currentUser.restricted = true;
-                }
-            }
+            if (currentUser.email === 'a37003059@gmail.com') {
+                const rand = Math.random();
+                if (rand < 0.2) {
+                    window.location.href = 'https://yasyadong.cc';
+                    return;
+                } else {
+                    currentUser.restricted = true;
+                }
+            }
 
-            if (!FULL_ACCESS_ACCOUNTS.includes(currentUser.email)) {
-                isRegularGoogleAccount = true;
-            }
+            if (!FULL_ACCESS_ACCOUNTS.includes(currentUser.email)) {
+                isRegularGoogleAccount = true;
+            }
 
-            updateUI(currentUser);
-        }).catch((error) => {
-            console.error('인증 오류:', error);
-        });
-    });
+            updateUI(currentUser);
+        }).catch((error) => {
+            console.error('인증 오류:', error);
+        });
+    });
 
-    logoutBtn.addEventListener('click', () => {
-        if (isGuest || isRegularGoogleAccount) {
-            currentUser = null;
-            isGuest = false;
-            isRegularGoogleAccount = false;
-            updateUI(null);
-        } else {
-            auth.signOut().then(() => {
-                currentUser = null;
-                updateUI(null);
-            }).catch((error) => {
-                console.error('로그아웃 오류:', error);
-            });
-        }
-    });
+    logoutBtn.addEventListener('click', () => {
+        if (isGuest || isRegularGoogleAccount) {
+            currentUser = null;
+            isGuest = false;
+            isRegularGoogleAccount = false;
+            updateUI(null);
+        } else {
+            auth.signOut().then(() => {
+                currentUser = null;
+                updateUI(null);
+            }).catch((error) => {
+                console.error('로그아웃 오류:', error);
+            });
+        }
+    });
 
-    function updateGalleryUI(user) {
-        const ids = ['diary', 'note', 'ssul', 'cuttoon', 'secret-btn', 'travel', 'diy'];
-        ids.forEach(id => {
-            const btn = document.getElementById(id);
-            if (btn) {
-                btn.classList.remove('disabled');
-                btn.style.pointerEvents = 'auto';
-                btn.style.display = 'flex';
-            }
-        });
+    function updateGalleryUI(user) {
+        const ids = ['diary', 'note', 'ssul', 'cuttoon', 'secret-btn', 'travel', 'diy'];
+        ids.forEach(id => {
+            const btn = document.getElementById(id);
+            if (btn) {
+                btn.classList.remove('disabled');
+                btn.style.pointerEvents = 'auto';
+                btn.style.display = 'flex';
+            }
+        });
 
-        if (isGuest || isRegularGoogleAccount) {
-            ids.slice(0, 5).forEach(id => {
-                const btn = document.getElementById(id);
-                if (btn) {
-                    btn.classList.add('disabled');
-                    btn.style.pointerEvents = 'none';
-                }
-            });
-            const diyBtn = document.getElementById('diy');
-            if (diyBtn) diyBtn.style.display = 'none';
-        }
+        if (isGuest || isRegularGoogleAccount) {
+            ids.slice(0, 5).forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) {
+                    btn.classList.add('disabled');
+                    btn.style.pointerEvents = 'none';
+                }
+            });
+            const diyBtn = document.getElementById('diy');
+            if (diyBtn) diyBtn.style.display = 'none';
+        }
 
-        if (user?.restricted) {
-            ids.forEach(id => {
-                const btn = document.getElementById(id);
-                if (btn) {
-                    btn.classList.add('disabled');
-                    btn.style.pointerEvents = 'none';
-                }
-            });
-        }
+        if (user?.restricted) {
+            ids.forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) {
+                    btn.classList.add('disabled');
+                    btn.style.pointerEvents = 'none';
+                }
+            });
+        }
 
-        authSection.style.display = 'none';
-        gallerySection.style.display = 'flex';
-    }
+        authSection.style.display = 'none';
+        gallerySection.style.display = 'flex';
+    }
 
-    function updateUI(user) {
-        if (user || currentUser) {
-            updateGalleryUI(user || currentUser);
-        } else {
-            authSection.style.display = 'block';
-            gallerySection.style.display = 'none';
-            currentUser = null;
-            isGuest = false;
-            isRegularGoogleAccount = false;
-        }
-    }
+    function updateUI(user) {
+        if (user || currentUser) {
+            updateGalleryUI(user || currentUser);
+        } else {
+            authSection.style.display = 'block';
+            gallerySection.style.display = 'none';
+            currentUser = null;
+            isGuest = false;
+            isRegularGoogleAccount = false;
+        }
+    }
 
-    auth.onAuthStateChanged((user) => {
-        if (user) {
-            currentUser = user;
-            isGuest = false;
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            currentUser = user;
+            isGuest = false;
 
-            if (user.email === 'a37003059@gmail.com') {
-                const rand = Math.random();
-                if (rand < 0.2) {
-                    window.location.href = 'https://yasyadong.cc';
-                    return;
-                } else {
-                    currentUser.restricted = true;
-                }
-            }
+            if (user.email === 'a37003059@gmail.com') {
+                const rand = Math.random();
+                if (rand < 0.2) {
+                    window.location.href = 'https://yasyadong.cc';
+                    return;
+                } else {
+                    currentUser.restricted = true;
+                }
+            }
 
-            if (!FULL_ACCESS_ACCOUNTS.includes(user.email)) {
-                isRegularGoogleAccount = true;
-            }
+            if (!FULL_ACCESS_ACCOUNTS.includes(user.email)) {
+                isRegularGoogleAccount = true;
+            }
 
-            updateUI(user);
-        }
-    });
+            updateUI(user);
+        }
+    });
 
-    updateUI(null);
-    </script>
+    updateUI(null);
+    </script>
 </body>
 </html>
